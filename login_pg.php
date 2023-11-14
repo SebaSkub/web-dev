@@ -124,9 +124,8 @@
     </div>
 
     <nav>
-        <a href="/landing.php">Landing</a>
         <a href="/register_pg.php">New User?&ensp;Register here!</a>
-        <a href="/login.php">Login</a>
+    
     </nav>
 </body>
 </html>
