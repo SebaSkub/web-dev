@@ -94,6 +94,18 @@
 <body>
     <h2>User Registration</h2>
     <form id="registrationForm" action="register.php" method="POST">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div>
+	    <label for="email">Email:</label>
+	    <input type="email" id="email" name="email" required>
+	</div>
         <div>
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" required>
