@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
         body {
@@ -20,10 +22,23 @@
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            text-align: center;
+        }
+
+        .error-box {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff6961;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 9999;
         }
 
         h2 {
-            text-align: center;
             color: #333;
         }
 
@@ -75,10 +90,21 @@
         a:hover {
             text-decoration: underline;
         }
+
+        nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        nav a {
+            margin: 0 10px;
+            color: #fff;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-    <div class "login-container">
+    <div class="login-container">
         <h2>Login</h2>
         <form method="POST" action="login.php" id="loginForm">
             <table>
@@ -95,7 +121,12 @@
             <input type='submit' value="Login"><br><br>
         </form>
         <br>
-        <a href='/register_pg.php'>New User?&ensp;Register here!</a>
     </div>
+
+    <nav>
+        <a href="/landing.php">Landing</a>
+        <a href="/register_pg.php">New User?&ensp;Register here!</a>
+        <a href="/login.php">Login</a>
+    </nav>
 </body>
 </html>
