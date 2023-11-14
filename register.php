@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = $_POST['firstName'];
     $last_name = $_POST['lastName'];
     $dob = $_POST['dob'];
-    $age = $_POST['age'];
+    $age = $_POST[age];
     $lol_id = $_POST['lolId'];
     $steam_link = $_POST['steamLink'];
     $security_question1 = $_POST['securityQuestion1'];
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Redirect to the login page after successful registration
-    header("Location: /it490/login_pg.php");
+    header("Location: /login_pg.php");
     exit;
 }
 ?>
