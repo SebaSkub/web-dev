@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $connectionSend = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
     $channelSend = $connectionSend->channel();
-    $channelSend->queue_declare($rabbitmq_queue, false, true, false, false);
+    $channelSend->queue_declare($rabbitmq_queue_send, false, true, false, false);
     $email = $_POST['email'];
     $first_name = $_POST['firstName'];
     $last_name = $_POST['lastName'];
     $dob = $_POST['dob'];
-    $age = $_POST[age];
+    $age = $_POST['age'];
     $lol_id = $_POST['lolId'];
     $steam_link = $_POST['steamLink'];
     $security_question1 = $_POST['securityQuestion1'];
