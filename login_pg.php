@@ -77,6 +77,10 @@
     </style>
 </head>
 <body>
+     <nav>
+        <a href="/home_pg.php">Home</a>
+        <a href="/register_pg.php">Register</a>
+    </nav>
     <div class="login-container">
         <h2>Login</h2>
         <form method="POST" action="login.php" id="loginForm">
@@ -84,9 +88,7 @@
             <input type='password' id='password' name='password' placeholder="Password" required>
             <input type='submit' value="Login">
         </form>
-        <nav>
-            <a href="/register_pg.php">New User? Register here!</a>
-        </nav>
+        
     </div>
 </body>
 </html>
