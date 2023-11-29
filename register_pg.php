@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
     <style>
         body {
@@ -13,148 +13,100 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         .registration-container {
+            width: 90%;
             max-width: 400px;
-            background: #333;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-        }
-
-        h2 {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 30px;
             text-align: center;
-            color: #fff;
         }
 
-        form {
-            padding: 20px;
+        .registration-container h2 {
+            margin-bottom: 20px;
+            color: #333;
         }
 
-        table {
+        .registration-container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .registration-container input[type="text"],
+        .registration-container input[type="email"],
+        .registration-container input[type="password"],
+        .registration-container input[type="date"],
+        .registration-container input[type="number"],
+        .registration-container input[type="url"] {
             width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background: #f4f4f4;
+            color: #333;
+            box-sizing: border-box;
         }
 
-        td {
-            padding: 10px;
-        }
-
-        .top {
-            padding-top: 15px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="date"],
-        input[type="number"],
-        input[type="url"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #007bff; /* Blue border */
-            border-radius: 3px;
-            background: #444; /* Dark background */
-            color: #fff;
-        }
-
-        input[type="submit"] {
+        .registration-container input[type="submit"] {
+            width: 50%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
             background-color: #007bff;
             color: #fff;
-            border: none;
-            border-radius: 3px;
-            padding: 10px 15px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        input[type="submit"]:hover {
+        .registration-container input[type="submit"]:hover {
             background-color: #0056b3;
         }
 
-        a {
+        .registration-container a {
             text-decoration: none;
             display: block;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 20px;
             color: #007bff;
             background: #fff;
-            padding: 8px 15px;
-            border-radius: 3px;
+            padding: 10px;
+            border-radius: 5px;
         }
 
-        a:hover {
+        .registration-container a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
-
 <body>
-    <h2>User Registration</h2>
-    <form id="registrationForm" action="register.php" method="POST">
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div>
-	    <label for="email">Email:</label>
-	    <input type="email" id="email" name="email" required>
-	</div>
-        <div>
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" required>
-        </div>
-        <div>
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" required>
-        </div>
-        <div>
-            <label for="dob">Date of Birth:</label>
+    <div class="registration-container">
+        <h2>User Registration</h2>
+        <form id="registrationForm" action="register.php" method="POST">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
             <input type="date" id="dob" name="dob" required>
-        </div>
-        <div>
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" required>
-        </div>
-        <div>
-            <label for="lolId">League of Legends ID:</label>
-            <input type="text" id="lolId" name="lolId" required>
-        </div>
-        <div>
-            <label for="steamLink">Steam Link:</label>
-            <input type="text" id="steamLink" name="steamLink" required>
-        </div>
-        <div>
-            <label for="securityQuestion1">Security Question #1: (Random Word)</label>
-            <input type="text" id="securityQuestion1" name="securityQuestion1" required>
-        </div>
-        <div>
-            <label for="securityQuestion2">Security Question #2: (Random PIN)</label>
-            <input type="text" id="securityQuestion2" name="securityQuestion2" readonly>
-            <button type="button" id="generatePIN">Generate PIN</button>
-        </div>
-
-        <h3>Login Information</h3>
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div>
+            <input type="number" id="age" name="age" placeholder="Age" required>
+            <input type="text" id="lolId" name="lolId" placeholder="League of Legends ID" required>
+            <input type="text" id="steamLink" name="steamLink" placeholder="Steam Link" required>
+            <input type="text" id="securityQuestion1" name="securityQuestion1" placeholder="Security Question #1: (Random Word)" required>
+            <div class="top">
+                <input type="text" id="securityQuestion2" name="securityQuestion2" placeholder="Security Question #2: (Random PIN)" readonly>
+                <button type="button" id="generatePIN">Generate PIN</button>
+            </div>
+            <h3>Login Information</h3>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
             <input type="submit" value="Register">
-        </div>
-    </form>
-
-    <a href="/login_pg.php">Back to Login</a>
+        </form>
+        <a href="/login_pg.php">Back to Login</a>
+    </div>
 
     <script>
         document.getElementById('generatePIN').addEventListener('click', function() {
@@ -167,6 +119,5 @@
             return Math.floor(1000 + Math.random() * 9000).toString();
         }
     </script>
-
 </body>
 </html>
