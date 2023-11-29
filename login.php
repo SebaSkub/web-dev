@@ -5,7 +5,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 require_once __DIR__ . '/vendor/autoload.php'; // Include the Composer autoloader
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $rabbitmq_host = '10.198.120.101'; // Update with your RabbitMQ server host
+    $rabbitmq_host = '10.211.55.8'; // Update with your RabbitMQ server host
     $rabbitmq_port = 5672;
     $rabbitmq_user = 'it490';
     $rabbitmq_password = 'it490';
