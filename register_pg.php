@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
     <style>
+        /* Your CSS styles here */
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #2980b9, #6dd5fa);
@@ -24,6 +25,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 30px;
             text-align: center;
+            margin-top: 50px;
         }
 
         .registration-container h2 {
@@ -42,8 +44,9 @@
         .registration-container input[type="password"],
         .registration-container input[type="date"],
         .registration-container input[type="number"],
-        .registration-container input[type="url"] {
-            width: 100%;
+        .registration-container input[type="url"],
+        .registration-container input[type="submit"] {
+            width: calc(100% - 24px);
             padding: 12px;
             margin: 10px 0;
             border: 1px solid #007bff;
@@ -54,13 +57,9 @@
         }
 
         .registration-container input[type="submit"] {
-            width: 50%;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
+            cursor: pointer;
             background-color: #007bff;
             color: #fff;
-            cursor: pointer;
             transition: background-color 0.3s;
         }
 
@@ -77,6 +76,9 @@
             background: #fff;
             padding: 10px;
             border-radius: 5px;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .registration-container a:hover {
@@ -85,20 +87,22 @@
     </style>
 </head>
 <body>
-     <nav>
+    <nav>
         <a href="/login_pg.php">Login</a>
         <a href="/home_pg.php">Home</a>
     </nav>
+
     <div class="registration-container">
         <h2>User Registration</h2>
         <form id="registrationForm" action="register.php" method="POST">
+            <!-- Input fields -->
             <input type="email" id="email" name="email" placeholder="Email" required>
             <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
             <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
             <input type="date" id="dob" name="dob" required>
             <input type="number" id="age" name="age" placeholder="Age" required>
             <input type="text" id="lolId" name="lolId" placeholder="League of Legends ID" required>
-            <input type="text" id="steamLink" name="steamLink" placeholder="Steam Link" required>
+            <input type="url" id="steamLink" name="steamLink" placeholder="Steam Link" required>
             <input type="text" id="securityQuestion1" name="securityQuestion1" placeholder="Security Question #1: (Random Word)" required>
             <div class="top">
                 <input type="text" id="securityQuestion2" name="securityQuestion2" placeholder="Security Question #2: (Random PIN)" readonly>
