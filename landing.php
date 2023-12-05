@@ -66,31 +66,31 @@
             </tr>
         </thead>
         <tbody>
-            {% for stat in player_stats %}
-            <tr>
-                <td>{{ stat.league_name }}</td>
-                <td>{{ stat.games_played }}</td>
-                <td>{{ stat.wins }}</td>
-                <td>{{ stat.losses }}</td>
-                <td>{{ stat.win_rate }}</td>
-                <td>{{ stat.kills }}</td>
-                <td>{{ stat.deaths }}</td>
-                <td>{{ stat.assists }}</td>
-                <td>{{ stat.kda }}</td>
-                <td>{{ stat.cs }}</td>
-                <td>{{ stat.cs_per_min }}</td>
-                <td>{{ stat.gold }}</td>
-                <td>{{ stat.gold_per_min }}</td>
-                <td>{{ stat.damage }}</td>
-                <td>{{ stat.damage_per_min }}</td>
-                <td>{{ stat.kill_participation }}</td>
-                <td>{{ stat.kill_share }}</td>
-                <td>{{ stat.gold_share }}</td>
-                <td>{{ stat.creep_score }}</td>
-                <td>{{ stat.champions_played }}</td>
-                <!-- Include other table data for your stats -->
-            </tr>
-            {% endfor %}
+            <?php foreach ($player_stats as $stat): ?>
+                <tr>
+                    <td><?php echo $stat['league_name']; ?></td>
+                    <td><?php echo $stat['games_played']; ?></td>
+                    <td><?php echo $stat['wins']; ?></td>
+                    <td><?php echo $stat['losses']; ?></td>
+                    <td><?php echo $stat['win_rate']; ?></td>
+                    <td><?php echo $stat['kills']; ?></td>
+                    <td><?php echo $stat['deaths']; ?></td>
+                    <td><?php echo $stat['assists']; ?></td>
+                    <td><?php echo $stat['kda']; ?></td>
+                    <td><?php echo $stat['cs']; ?></td>
+                    <td><?php echo $stat['cs_per_min']; ?></td>
+                    <td><?php echo $stat['gold']; ?></td>
+                    <td><?php echo $stat['gold_per_min']; ?></td>
+                    <td><?php echo $stat['damage']; ?></td>
+                    <td><?php echo $stat['damage_per_min']; ?></td>
+                    <td><?php echo $stat['kill_participation']; ?></td>
+                    <td><?php echo $stat['kill_share']; ?></td>
+                    <td><?php echo $stat['gold_share']; ?></td>
+                    <td><?php echo $stat['creep_score']; ?></td>
+                    <td><?php echo $stat['champions_played']; ?></td>
+                    <!-- Include other table data for your stats -->
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </body>
