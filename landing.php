@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>League of Legends Stats</title>
+    <img src="logo.jpeg" alt="Logo Image">
+
     <style>
         /* Your CSS styling here */
         body {
