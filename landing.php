@@ -1,57 +1,97 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>League of Legends Landing Page</title>
+    <title>League of Legends Stats</title>
     <style>
+        /* Your CSS styling here */
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #2980b9, #6dd5fa);
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .landing-container {
-            max-width: 800px;
-            background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
-
-        h2 {
+        
+        h1 {
             text-align: center;
             color: #333;
         }
-
-        p {
-            font-size: 16px;
-            color: #333;
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
+        
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    <div class="landing-container">
-        <h2>Welcome to League of Legends</h2>
-        <p>League of Legends is a popular online multiplayer battle arena (MOBA) game developed and published by Riot Games.</p>
-        <p>Here are some interesting facts about League of Legends:</p>
-        <ul>
-            <li>It was officially released on October 27, 2009.</li>
-            <li>League of Legends has a large and active player community worldwide.</li>
-            <li>The game features over 150 champions, each with unique abilities and playstyles.</li>
-        </ul>
-        <img src="download.jpeg" alt="League of Legends Image" /> <!-- Replace with your image -->
-    </div>
+    <h1>League of Legends Stats</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>League Name</th>
+                <th>Games Played</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Win Rate</th>
+                <th>Kills</th>
+                <th>Deaths</th>
+                <th>Assists</th>
+                <th>KDA</th>
+                <th>CS</th>
+                <th>CS/M</th>
+                <th>Gold</th>
+                <th>Gold/Min</th>
+                <th>Damage</th>
+                <th>Damage/Min</th>
+                <th>Kill Participation</th>
+                <th>Kill Share</th>
+                <th>Gold Share</th>
+                <th>Creep Score</th>
+                <th>Champions Played</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in player_stats %}
+            <tr>
+                <td>{{ stat.league_name }}</td>
+                <td>{{ stat.games_played }}</td>
+                <td>{{ stat.wins }}</td>
+                <td>{{ stat.losses }}</td>
+                <td>{{ stat.win_rate }}</td>
+                <td>{{ stat.kills }}</td>
+                <td>{{ stat.deaths }}</td>
+                <td>{{ stat.assists }}</td>
+                <td>{{ stat.kda }}</td>
+                <td>{{ stat.cs }}</td>
+                <td>{{ stat.cs_per_min }}</td>
+                <td>{{ stat.gold }}</td>
+                <td>{{ stat.gold_per_min }}</td>
+                <td>{{ stat.damage }}</td>
+                <td>{{ stat.damage_per_min }}</td>
+                <td>{{ stat.kill_participation }}</td>
+                <td>{{ stat.kill_share }}</td>
+                <td>{{ stat.gold_share }}</td>
+                <td>{{ stat.creep_score }}</td>
+                <td>{{ stat.champions_played }}</td>
+                <!-- Include other table data for your stats -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
-            <a href='/login_pg.php'>Return to login page</a>
 </html>
