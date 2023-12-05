@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
+        /* Styles for body, background, and container */
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #2980b9, #6dd5fa);
@@ -14,6 +15,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: #fff;
         }
 
         .login-container {
@@ -26,6 +28,7 @@
             text-align: center;
         }
 
+        /* Styles for login form */
         .login-container h2 {
             margin-bottom: 20px;
             color: #333;
@@ -64,6 +67,30 @@
             background-color: #0077aa;
         }
 
+        /* Styles for "Register Here" button */
+        .register-btn {
+            width: 50%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #27ae60;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .register-btn:hover {
+            background-color: #218e53;
+        }
+
+        /* Styles for error messages */
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Styles for navigation */
         nav {
             text-align: center;
             margin-top: 20px;
@@ -77,18 +104,24 @@
     </style>
 </head>
 <body>
-     <nav>
+    <!-- Navigation -->
+    <nav>
         <a href="/home_pg.php">Home</a>
         <a href="/register_pg.php">Register</a>
     </nav>
+
+    <!-- Login container -->
     <div class="login-container">
         <h2>Login</h2>
         <form method="POST" action="login.php" id="loginForm">
-            <input type='text' id='username' name='username' placeholder="Username" required>
-            <input type='password' id='password' name='password' placeholder="Password" required>
+            <input type='text' id='username' name='username' placeholder="Username" aria-label="Username" required>
+            <input type='password' id='password' name='password' placeholder="Password" aria-label="Password" required>
             <input type='submit' value="Login">
+            <button class="register-btn" onclick="location.href='/register_pg.php'">Register Here</button>
+            <p class="error-message" id="errorMessage"></p>
         </form>
-        
     </div>
+    
+    
 </body>
 </html>
