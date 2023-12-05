@@ -22,12 +22,26 @@
             width: 100%;
             padding: 15px 0;
             text-align: center;
+            display: flex;
+            justify-content: center;
         }
 
         nav a {
             color: #fff;
             text-decoration: none;
-            margin: 0 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        nav a.active {
+            background-color: #f1c40f;
+            color: #333;
         }
 
         .content {
@@ -42,18 +56,21 @@
 
         p {
             line-height: 1.6;
+            margin-bottom: 20px;
         }
 
         .lol-image {
             max-width: 100%;
             height: auto;
             margin-top: 30px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
     <nav>
-        <a href="/login_pg.php">Login</a>
+        <a href="/login_pg.php" class="active">Login</a>
         <a href="/register_pg.php">Register</a>
     </nav>
 
@@ -68,7 +85,7 @@
         <p>
             Join us to explore your strengths, identify areas for improvement, and compete with the best. Elevate your League of Legends experience with our comprehensive stat analysis and player comparison features.
         </p>
-        <img src="download.jpeg" alt="League of Legends Image" />
+        <img class="lol-image" src="download.jpeg" alt="League of Legends Image" />
     </div>
 </body>
 </html>
