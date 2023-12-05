@@ -35,6 +35,21 @@ class PlayerStats(db.Model):
 def landing_page():
     stats_from_db = PlayerStats.query.all()  # Retrieve stats from the database
     return render_template('landing_page.html', player_stats=stats_from_db)
+@app.route('/search', methods=['GET'])
+def search_player():
+    player_name = request.args.get('player_name', '')
+    
+    if player_name:
+        # Query the database for the player stats using the provided name
+        stats_from_db = PlayerStats.query.filter_by(league_name=player_name).all()
+    else:
+        # If no name provided, display all player stats
+        stats_from_db = PlayerStats.query.all()
+
+    return render_template('landing.html', player_stats=stats_from_db)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
