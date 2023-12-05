@@ -64,7 +64,6 @@
                 <th>Kill Share</th>
                 <th>Gold Share</th>
                 <th>Creep Score</th>
-                <th>Champions Played</th>
             </tr>
         </thead>
         <tbody>
@@ -89,7 +88,6 @@
                     <td><?php echo $stat['kill_share']; ?></td>
                     <td><?php echo $stat['gold_share']; ?></td>
                     <td><?php echo $stat['creep_score']; ?></td>
-                    <td><?php echo $stat['champions_played']; ?></td>
                     <!-- Include other table data for your stats -->
                 </tr>
             <?php endforeach; ?>
