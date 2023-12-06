@@ -18,9 +18,28 @@
             color: #fff;
         }
 
+        nav {
+            width: 100%;
+            background-color: #000;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #666;
+            color: #333;
+        }
+
         h1 {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 20px;
         }
 
         table {
@@ -48,6 +67,12 @@
     </style>
 </head>
 <body>
+    <nav>
+        <a href="/home_pg.php">Home</a>
+        <a href="/login_pg.php">Login</a>
+        <a href="/register_pg.php">Register</a>
+        <!-- Add more navigation links as needed -->
+    </nav>
     <h1>League of Legends Stats</h1>
     <table>
         <thead>
