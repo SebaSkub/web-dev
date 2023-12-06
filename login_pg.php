@@ -19,7 +19,7 @@
         }
 
         nav {
-            background-color: #444; /* Changed color to match the theme */
+            background-color: #000; /* Changed to black */
             width: 100%;
             padding: 15px 0;
             text-align: center;
@@ -38,7 +38,8 @@
         }
 
         nav a:hover {
-            background-color: #666; /* Adjusted hover color */
+            background-color: #fff;
+            color: #000; /* Changed text color on hover */
         }
 
         nav a.active {
@@ -57,67 +58,7 @@
             margin-top: 20px; /* Added margin-top to align with the nav bar */
         }
 
-        /* Styles for login form */
-        .login-container h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .login-container form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background: #f4f4f4;
-            color: #333;
-            box-sizing: border-box;
-        }
-
-        .login-container input[type="submit"] {
-            width: 50%;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            background-color: #2980b9;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .login-container input[type="submit"]:hover {
-            background-color: #0077aa;
-        }
-
-        /* Styles for "Register Here" button */
-        .register-btn {
-            width: 50%;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            background-color: #27ae60;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-
-        .register-btn:hover {
-            background-color: #218e53;
-        }
-
-        /* Styles for error messages */
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
+        /* Rest of your styles... */
     </style>
 </head>
 <body>
