@@ -18,7 +18,7 @@
         }
 
         nav {
-            background-color: #444; /* Changed color to match the theme */
+            background-color: #000; /* Changed to black */
             width: 100%;
             padding: 15px 0;
             text-align: center;
@@ -33,11 +33,12 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             margin: 0 10px;
-            border: 1px solid transparent; /* Added border for better visibility */
+            border: 1px solid #fff; /* Changed border color to white */
         }
 
         nav a:hover {
-            background-color: #666; /* Adjusted hover color */
+            background-color: #fff; /* Changed hover background color to white */
+            color: #000; /* Changed hover text color to black */
         }
 
         nav a.active {
