@@ -54,6 +54,23 @@
         <thead>
             <tr>
                 <th>League Name</th>
+                <th>Games Played</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Win Rate</th>
+                <th>Kills</th>
+                <th>Deaths</th>
+                <th>Assists</th>
+                <th>KDA</th>
+                <th>CS</th>
+                <th>CS/M</th>
+                <th>Gold</th>
+                <th>Gold/Min</th>
+                <th>Damage</th>
+                <th>Damage/Min</th>
+                <th>Kill Participation</th>
+                <th>Kill Share</th>
+                <th>Gold Share</th>
                 <!-- Add other headers here -->
             </tr>
         </thead>
