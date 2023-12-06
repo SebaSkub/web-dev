@@ -1,8 +1,37 @@
-<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
+// Your RabbitMQ connection and queue details
+$rabbitmq_host = '10.198.120.107'; // Update with your RabbitMQ server host
+$rabbitmq_port = 5672;
+$rabbitmq_user = 'it490';
+$rabbitmq_password = 'it490';
+$rabbitmq_queue_receive = 'playerStats';
+
+// Establish connection to RabbitMQ
+$connection = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+$channel = $connection->channel();
+
+// Declare queue to receive messages
+$channel->queue_declare($rabbitmq_queue_receive, false, true, false, false);
+
+// Callback function to process received messages
+$callback = function ($msg) {
+    // Extracting and processing received message
+    $received_message = $msg->body;
+    
+    // Split the received message into individual stats
+    $stats = explode(',', $received_message);
+
+    // Display the statistics (Modify as per your HTML structure)
+    echo "<!DOCTYPE html>
 <html>
 <head>
     <title>League of Legends Stats</title>
-    <img src="logo.jpeg" alt="Logo Image">
+    <img src='logo.jpeg' alt='Logo Image'>
 
     <style>
         /* Your CSS styling here */
@@ -64,34 +93,28 @@
                 <th>Kill Share</th>
                 <th>Gold Share</th>
                 <th>Creep Score</th>
+                <!-- Add other headers here -->
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($player_stats as $stat): ?>
-                <tr>
-                    <td><?php echo $stat['league_name']; ?></td>
-                    <td><?php echo $stat['games_played']; ?></td>
-                    <td><?php echo $stat['wins']; ?></td>
-                    <td><?php echo $stat['losses']; ?></td>
-                    <td><?php echo $stat['win_rate']; ?></td>
-                    <td><?php echo $stat['kills']; ?></td>
-                    <td><?php echo $stat['deaths']; ?></td>
-                    <td><?php echo $stat['assists']; ?></td>
-                    <td><?php echo $stat['kda']; ?></td>
-                    <td><?php echo $stat['cs']; ?></td>
-                    <td><?php echo $stat['cs_per_min']; ?></td>
-                    <td><?php echo $stat['gold']; ?></td>
-                    <td><?php echo $stat['gold_per_min']; ?></td>
-                    <td><?php echo $stat['damage']; ?></td>
-                    <td><?php echo $stat['damage_per_min']; ?></td>
-                    <td><?php echo $stat['kill_participation']; ?></td>
-                    <td><?php echo $stat['kill_share']; ?></td>
-                    <td><?php echo $stat['gold_share']; ?></td>
-                    <td><?php echo $stat['creep_score']; ?></td>
-                    <!-- Include other table data for your stats -->
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</body>
-</html>
+            <tr>";
+
+    foreach ($stats as $stat) {
+        echo "<td>{$stat}</td>"; // Display each stat in a table cell
+    }
+
+    echo "</tr></tbody></table></body></html>";
+};
+
+// Consume messages from the queue
+$channel->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
+
+// Keep the connection open and continue processing messages
+while ($channel->is_open()) {
+    $channel->wait();
+}
+
+// Close the channel and connection after processing
+$channel->close();
+$connection->close();
+?>
