@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>League of Legends Stats</title>
-
     <style>
         /* Your CSS styling here */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #222;
+            color: #fff;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -18,7 +17,7 @@
         
         h1 {
             text-align: center;
-            color: #333;
+            color: #ffcc00;
             margin-bottom: 20px;
         }
 
@@ -34,44 +33,27 @@
         }
         
         th, td {
-            border: 1px solid #333;
+            border: 1px solid #fff;
             padding: 8px;
             text-align: center;
         }
         
         th {
-            background-color: #333;
-            color: #fff;
+            background-color: #444;
         }
         
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #333;
         }
     </style>
 </head>
 <body>
     <h1>League of Legends Stats</h1>
+    <img src='logo.jpeg' alt='Logo Image'>
     <table>
         <thead>
             <tr>
                 <th>League Name</th>
-                <th>Games Played</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Win Rate</th>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>Assists</th>
-                <th>KDA</th>
-                <th>CS</th>
-                <th>CS/M</th>
-                <th>Gold</th>
-                <th>Gold/Min</th>
-                <th>Damage</th>
-                <th>Damage/Min</th>
-                <th>Kill Participation</th>
-                <th>Kill Share</th>
-                <th>Gold Share</th>
                 <!-- Add other headers here -->
             </tr>
         </thead>
