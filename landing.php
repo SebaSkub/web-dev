@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>League of Legends Stats</title>
-    <img src='logo.jpeg' alt='Logo Image'>
 
     <style>
         /* Your CSS styling here */
@@ -11,17 +10,27 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
         
         h1 {
             text-align: center;
             color: #333;
+            margin-bottom: 20px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
         
         th, td {
@@ -63,7 +72,6 @@
                 <th>Kill Participation</th>
                 <th>Kill Share</th>
                 <th>Gold Share</th>
-                <th>Creep Score</th>
                 <!-- Add other headers here -->
             </tr>
         </thead>
