@@ -12,10 +12,38 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             color: #fff;
+        }
+
+        nav {
+            background-color: #444; /* Changed color to match the theme */
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            border: 1px solid transparent; /* Added border for better visibility */
+        }
+
+        nav a:hover {
+            background-color: #666; /* Adjusted hover color */
+        }
+
+        nav a.active {
+            background-color: #f1c40f;
+            color: #333;
         }
 
         .login-container {
@@ -26,6 +54,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 30px;
             text-align: center;
+            margin-top: 20px; /* Added margin-top to align with the nav bar */
         }
 
         /* Styles for login form */
@@ -89,18 +118,6 @@
             color: red;
             margin-top: 10px;
         }
-
-        /* Styles for navigation */
-        nav {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        nav a {
-            margin: 0 10px;
-            color: #fff;
-            text-decoration: none;
-        }
     </style>
 </head>
 <body>
@@ -121,7 +138,5 @@
             <p class="error-message" id="errorMessage"></p>
         </form>
     </div>
-    
-    
 </body>
 </html>
