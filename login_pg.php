@@ -13,7 +13,7 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; 
             min-height: 100vh;
             color: #fff;
         }
