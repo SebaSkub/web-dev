@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $callback = function ($msg) {
 	    $response = $msg->body;
 	    if ($response === 'Backend acknowledges successful registration of new user') {
-		   header("Location:/login.php");
+		   header("Location:/login_pg.php");
 		   exit;
 	    } elseif ($response === 'Backend acknowledges failed registration of the new user') {
 		    //Invalid Login display a notification
