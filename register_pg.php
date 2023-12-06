@@ -16,6 +16,33 @@
             align-items: center;
             min-height: 100vh;
         }
+        
+        nav {
+            background-color: #000;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            border: 1px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        nav a.active {
+            background-color: #f1c40f;
+            color: #333;
+        }
 
         .registration-container {
             width: 90%;
