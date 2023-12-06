@@ -72,7 +72,7 @@
 </head>
 <body>
     <nav>
-        <a href="/login_pg.php" class="active">Login</a>
+        <a href="/login_pg.php">Login</a>
         <a href="/register_pg.php">Register</a>
     </nav>
 
