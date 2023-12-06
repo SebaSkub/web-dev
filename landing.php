@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>League of Legends Stats</title>
+    <img src='logo.jpeg' alt='Logo Image'>
+
     <style>
         /* Your CSS styling here */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #fff;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #2980b9, #6dd5fa);
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #ffcc00;
-            margin-bottom: 20px;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
         }
 
-        img {
-            display: block;
-            margin: 0 auto;
+        h1 {
+            text-align: center;
+            margin-top: 50px;
         }
-        
+
         table {
-            width: 100%;
+            width: 80%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
         th, td {
             border: 1px solid #fff;
             padding: 8px;
             text-align: center;
         }
-        
+
         th {
-            background-color: #444;
-        }
-        
-        tr:nth-child(even) {
             background-color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #444;
         }
     </style>
 </head>
 <body>
     <h1>League of Legends Stats</h1>
-    <img src='logo.jpeg' alt='Logo Image'>
     <table>
         <thead>
             <tr>
@@ -71,7 +70,7 @@
                 <th>Kill Participation</th>
                 <th>Kill Share</th>
                 <th>Gold Share</th>
-                <!-- Add other headers here -->
+                <!-- Include other headers here -->
             </tr>
         </thead>
         <tbody>
