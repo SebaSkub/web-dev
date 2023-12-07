@@ -17,29 +17,39 @@
             min-height: 100vh;
         }
         
-        nav {
+          .navbar {
             background-color: #000;
             width: 100%;
-            padding: 15px 0;
             text-align: center;
         }
 
-        nav a {
+        .navbar-links {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            list-style-type: none;
+            margin: 0;
+        }
+
+        .navbar-links li {
+            margin: 0 10px;
+        }
+
+        .navbar-links a {
             color: #fff;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 5px;
             transition: all 0.3s ease;
-            margin: 0 10px;
             border: 1px solid transparent;
         }
 
-        nav a:hover {
+        .navbar-links a:hover {
             background-color: #fff;
             color: #000;
         }
 
-        nav a.active {
+        .navbar-links a.active {
             background-color: #f1c40f;
             color: #333;
         }
