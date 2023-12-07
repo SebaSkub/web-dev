@@ -6,29 +6,31 @@
     <title>User Registration</title>
     <style>
         /* Your CSS styles here */
-        body {
+           body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #2980b9, #6dd5fa);
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            color: #fff;
         }
-        
-          .navbar {
+
+        .navbar {
             background-color: #000;
             width: 100%;
             text-align: center;
+            padding: 15px 0;
         }
 
         .navbar-links {
-            display: flex;
-            justify-content: center;
-            padding: 15px 0;
             list-style-type: none;
             margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
         }
 
         .navbar-links li {
@@ -55,8 +57,8 @@
         }
 
         .registration-container {
-            width: 90%;
-            max-width: 400px;
+            width: 95%;
+            max-width: 800px; /* Adjusted width */
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -71,8 +73,9 @@
         }
 
         .registration-container form {
-            display: flex;
-            flex-direction: column;
+            display: grid; /* Utilize CSS grid */
+            grid-template-columns: 1fr 1fr; /* Two columns for fields */
+            grid-gap: 20px; /* Gap between fields */
             align-items: center;
         }
 
