@@ -91,12 +91,12 @@
         }
 
         nav {
-            background-color: #000; /* Changed to black */
+            background-color: #000;
             width: 100%;
             padding: 15px 0;
             text-align: center;
-            display: flex;
-            justify-content: center;
+            position: absolute;
+            top: 0;
         }
 
         nav a {
@@ -106,19 +106,18 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             margin: 0 10px;
-            border: 1px solid transparent; /* Added border for better visibility */
+            border: 1px solid transparent;
         }
 
         nav a:hover {
             background-color: #fff;
-            color: #000; /* Changed text color on hover */
+            color: #000;
         }
 
         nav a.active {
             background-color: #f1c40f;
             color: #333;
         }
-
         .login-container {
             width: 90%;
             max-width: 400px;
