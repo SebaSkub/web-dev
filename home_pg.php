@@ -10,13 +10,9 @@
             background: linear-gradient(to right, #2980b9, #6dd5fa);
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             color: #fff;
         }
-
+        
         .login-container {
             width: 90%;
             max-width: 400px;
@@ -94,8 +90,9 @@
             width: 100%;
             padding: 15px 0;
             text-align: center;
-            display: flex;
-            justify-content: center;
+            position: fixed;
+            top: 0;
+            z-index: 999;
         }
 
         nav a {
@@ -122,6 +119,7 @@
             max-width: 800px;
             text-align: center;
             padding: 20px;
+            margin-top: 60px; /* Adjusted margin-top to create space below the navbar */
         }
 
         h1 {
