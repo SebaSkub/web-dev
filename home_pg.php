@@ -25,6 +25,11 @@
             z-index: -1; /* Place it behind other content */
         }
 
+        .content-container {
+            position: relative;
+            padding-top: 150px; /* Adjusted padding for content */
+        }
+
         nav {
             background-color: #000;
             width: 100%;
@@ -54,7 +59,11 @@
             max-width: 800px;
             text-align: center;
             padding: 20px;
-            margin: 150px auto 0; /* Adjusted margin for content */
+            margin: 0 auto;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for content */
+            border-radius: 10px; /* Adding some border-radius */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Adding a shadow effect */
         }
 
         h1 {
@@ -83,18 +92,20 @@
         <a href="/register_pg.php">Register</a>
     </nav>
 
-    <div class="content">
-        <h1>Explore and Compare Your League of Legends Stats</h1>
-        <p>
-            Welcome to our League of Legends community! Discover a platform where you can dive deep into your in-game statistics and compare your performance with top players worldwide.
-        </p>
-        <p>
-            Our website offers an intuitive way to access your match history, analyze your champion performance, and track your progress. Whether you're a seasoned player or just starting your journey in LoL, our tools help you understand and improve your gameplay.
-        </p>
-        <p>
-            Join us to explore your strengths, identify areas for improvement, and compete with the best. Elevate your League of Legends experience with our comprehensive stat analysis and player comparison features.
-        </p>
-        <img class="lol-image" src="download.jpeg" alt="League of Legends Image" />
+    <div class="content-container">
+        <div class="content">
+            <h1>Explore and Compare Your League of Legends Stats</h1>
+            <p>
+                Welcome to our League of Legends community! Discover a platform where you can dive deep into your in-game statistics and compare your performance with top players worldwide.
+            </p>
+            <p>
+                Our website offers an intuitive way to access your match history, analyze your champion performance, and track your progress. Whether you're a seasoned player or just starting your journey in LoL, our tools help you understand and improve your gameplay.
+            </p>
+            <p>
+                Join us to explore your strengths, identify areas for improvement, and compete with the best. Elevate your League of Legends experience with our comprehensive stat analysis and player comparison features.
+            </p>
+            <img class="lol-image" src="download.jpeg" alt="League of Legends Image" />
+        </div>
     </div>
 
     <script>
