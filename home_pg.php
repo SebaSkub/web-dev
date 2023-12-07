@@ -11,9 +11,18 @@
             margin: 0;
             padding: 0;
             color: #fff;
-            background: url('image1.jpeg') no-repeat center center fixed; /* Set the initial background */
-            background-size: cover;
+            overflow: hidden; /* Hide potential scrollbars */
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: auto; /* Display original image size */
             transition: opacity 1s ease-in-out;
+            z-index: -1; /* Place it behind other content */
         }
 
         nav {
@@ -45,7 +54,7 @@
             max-width: 800px;
             text-align: center;
             padding: 20px;
-            margin-top: 60px;
+            margin: 150px auto 0; /* Adjusted margin for content */
         }
 
         h1 {
@@ -67,6 +76,8 @@
     </style>
 </head>
 <body>
+    <div class="background"></div> <!-- Background container -->
+
     <nav>
         <a href="/login_pg.php">Login</a>
         <a href="/register_pg.php">Register</a>
@@ -89,14 +100,14 @@
     <script>
         const images = ['image1.jpeg', 'image2.jpeg', 'image3.jpeg', 'image4.jpeg', 'image5.jpeg'];
         let currentImageIndex = 0;
-        const body = document.body;
+        const background = document.querySelector('.background');
 
         function changeBackground() {
-            body.style.opacity = '0'; // Fade out
+            background.style.opacity = '0'; // Fade out
             setTimeout(() => {
-                body.style.backgroundImage = `url(${images[currentImageIndex]})`;
+                background.style.backgroundImage = `url(${images[currentImageIndex]})`;
                 currentImageIndex = (currentImageIndex + 1) % images.length;
-                body.style.opacity = '1'; // Fade in
+                background.style.opacity = '1'; // Fade in
             }, 1000); // Change image after 1 second (when fully faded out)
         }
 
