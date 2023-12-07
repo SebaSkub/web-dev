@@ -39,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Waiting for a response
     $callback = function ($msg) {
 	    $response = $msg->body;
-	    if ($response === 'Backend acknowledges successful login attempt') {
+	    if ($response === 'User Login was successful -- Database, Backend') {
 		   header("Location:/landing.php");
 		   exit;
-	    } elseif ($response === 'Backend acknowledges failed message login attempt') {
+	    } elseif ($response === 'User Login was unsuccessful -- Database, Backend') {
 		    //Invalid Login display a notification
 		    echo "<script>
 			    document.addEventListener('DOMContentLoaded', function() {
