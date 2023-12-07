@@ -124,10 +124,12 @@
     </style>
 </head>
 <body>
-    <nav>
-        <a href="/login_pg.php">Login</a>
-        <a href="/home_pg.php">Home</a>
-    </nav>
+    <div class="navbar">
+        <ul class="navbar-links">
+            <li><a href="/login_pg.php">Login</a></li>
+            <li><a href="/home_pg.php">Home</a></li>
+        </ul>
+    </div>
 
     <div class="registration-container">
         <h2>User Registration</h2>
