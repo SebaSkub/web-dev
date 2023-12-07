@@ -45,10 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     //Waiting for a response
     $callback = function ($msg) {
 	    $response = $msg->body;
-	    if ($response === 'Backend acknowledges successful registration of new user') {
+	    if ($response === 'User Registration was successful -- Database, Backend') {
 		   header("Location:/login_pg.php");
 		   exit;
-	    } elseif ($response === 'Backend acknowledges failed registration of the new user') {
+	    } elseif ($response === 'User Registration was unsuccessful -- Database, Backend') {
 		    //Invalid Login display a notification
 		    echo "<script>
 			    document.addEventListener('DOMContentLoaded', function() {
@@ -64,7 +64,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			</script>";
 		    exit;
 	   }
-	   $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+	    else {
+		echo "<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				var errorBox = document.createElement('div');
+				errorBox.className = 'error-box';
+				errorBox.innerHTML = 'Invalid Username, username already exists. Please try again.';
+				document.body.appendChild(errorBox);
+
+				setTimeout(function() { 
+					document.body.removeChild(errorBox);	
+				}, 5000);  // Remove the box after 5 seconds
+			    });
+			</script>";
+		    exit;
+	    }
+	    $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     };
     $channelReceive->basic_consume($rabbitmq_queue_receive, '', false,true, false, false, $callback);
     while (count($channelReceive->callbacks)) {
