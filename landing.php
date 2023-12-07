@@ -11,11 +11,10 @@
             background: linear-gradient(to right, #2980b9, #6dd5fa);
             margin: 0;
             padding: 0;
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            color: #fff;
         }
 
         nav {
@@ -23,6 +22,9 @@
             background-color: #000;
             padding: 10px 0;
             text-align: center;
+            position: fixed;
+            top: 0;
+            z-index: 999;
         }
 
         nav a {
@@ -39,7 +41,7 @@
 
         h1 {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 60px; /* Adjusted margin top to create space below the navbar */
         }
 
         table {
