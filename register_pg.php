@@ -97,33 +97,34 @@
         }
 
         .registration-container input[type="submit"] {
-            cursor: pointer;
-            background-color: #007bff;
-            color: #fff;
-            transition: background-color 0.3s;
-        }
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s;
+}
 
-        .registration-container input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+.registration-container input[type="submit"]:hover {
+    background-color: #0056b3;
+}
 
-        .registration-container a {
-            text-decoration: none;
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #007bff;
-            background: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            width: 50%;
-            margin-left: auto;
-            margin-right: auto;
-        }
+.registration-container a {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    background: #007bff; /* Change the background color */
+    padding: 10px;
+    border-radius: 5px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        .registration-container a:hover {
-            text-decoration: underline;
-        }
+.registration-container a:hover {
+    text-decoration: underline;
+    background-color: #0056b3; /* Change hover background color */
+}
     </style>
 </head>
 <body>
