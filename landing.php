@@ -6,66 +6,75 @@
 
     <style>
         /* Your CSS styling here */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #2980b9, #6dd5fa);
-            margin: 0;
-            padding: 0;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+     body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #2980b9, #6dd5fa);
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        nav {
-            width: 100%;
-            background-color: #000;
-            padding: 10px 0;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            z-index: 999;
-        }
+nav {
+    width: 100%;
+    background-color: #000;
+    padding: 15px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            transition: all 0.3s ease;
-        }
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    border: 1px solid transparent;
+}
 
-        nav a:hover {
-            background-color: #666;
-            color: #333;
-        }
+nav a:hover {
+    background-color: #fff;
+    color: #000;
+}
 
-        h1 {
-            text-align: center;
-            margin-top: 60px; /* Adjusted margin top to create space below the navbar */
-        }
+nav a.active {
+    background-color: #f1c40f;
+    color: #333;
+}
 
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+h1 {
+    text-align: center;
+    margin-top: 60px; /* Adjusted margin top to create space below the navbar */
+}
 
-        th, td {
-            border: 1px solid #fff;
-            padding: 8px;
-            text-align: center;
-        }
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-        th {
-            background-color: #333;
-        }
+th,
+td {
+    border: 1px solid #fff;
+    padding: 8px;
+    text-align: center;
+}
 
-        tr:nth-child(even) {
-            background-color: #444;
-        }
+th {
+    background-color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #444;
+}
     </style>
 </head>
 <body>
