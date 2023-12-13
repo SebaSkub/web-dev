@@ -139,20 +139,18 @@ form {
             </tr>
         </thead>
     <tbody>
-            <?php
+          <?php
             function scrape_player_data($playerName) {
-                $url = 'https://lol.fandom.com/wiki/' . urlencode($playerName);
+                $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics' . urlencode($playerName);
                 $response = file_get_contents($url);
 
-                // Check if the request was successful
                 if ($response !== false) {
                     $html = new DOMDocument();
                     @$html->loadHTML($response);
                     $xpath = new DOMXPath($html);
 
-                    $tableRows = $xpath->query("//table[@class='wikitable']/tbody/tr[position()>5]");
+                    $tableRows = $xpath->query("//table[contains(@class, 'wikitable')][2]/tbody/tr[position()>3]");
 
-                    // Display the scraped data in the table
                     foreach ($tableRows as $row) {
                         echo "<tr>";
                         foreach ($row->childNodes as $cell) {
@@ -161,7 +159,7 @@ form {
                         echo "</tr>";
                     }
                 } else {
-                    echo "Failed to retrieve the page.";
+                    echo "<tr><td colspan='18'>Failed to retrieve player data.</td></tr>";
                 }
             }
 
