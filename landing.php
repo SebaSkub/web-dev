@@ -77,7 +77,27 @@ th {
 
 tr:nth-child(even) {
     background-color: #444;
-}
+form {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type=text] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        button[type=submit] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f1c40f;
+            color: #333;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -88,10 +108,16 @@ tr:nth-child(even) {
         <!-- Add more navigation links as needed -->
     </nav>
     <h1>League of Legends Stats</h1>
+    <!-- Search form for LolID input -->
+    <form method="post" action="">
+        <input type="text" name="lolID" placeholder="Enter LolID">
+        <button type="submit" name="search">Search</button>
+    </form>
     <table>
         <thead>
             <tr>
-                <th>League Name</th>
+                <th>Player Name</th>
+                <th>Team</th>
                 <th>Games Played</th>
                 <th>Wins</th>
                 <th>Losses</th>
@@ -109,15 +135,41 @@ tr:nth-child(even) {
                 <th>Kill Participation</th>
                 <th>Kill Share</th>
                 <th>Gold Share</th>
-                <!-- Include other headers here -->
+                <!-- Add other headers as required -->
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <?php foreach ($stats as $stat): ?>
-                    <td><?php echo $stat; ?></td>
-                <?php endforeach; ?>
-            </tr>
+       <tbody>
+            <?php
+            function scrape_player_data($url) {
+                $response = file_get_contents($url);
+
+                // Check if the request was successful
+                if ($response !== false) {
+                    $html = new DOMDocument();
+                    @$html->loadHTML($response);
+                    $xpath = new DOMXPath($html);
+
+                    $tableRows = $xpath->query("//table[@class='wikitable']/tbody/tr[position()>5]");
+
+                    // Display the scraped data in the table
+                    foreach ($tableRows as $row) {
+                        echo "<tr>";
+                        foreach ($row->childNodes as $cell) {
+                            echo "<td>" . $cell->nodeValue . "</td>";
+                        }
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "Failed to retrieve the page.";
+                }
+            }
+
+            if (isset($_POST['search'])) {
+                $lolID = $_POST['lolID'];
+                $url = 'https://lol.fandom.com/wiki/' . $lolID;
+                scrape_player_data($url);
+            }
+            ?>
         </tbody>
     </table>
    
