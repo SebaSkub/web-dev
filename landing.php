@@ -1,10 +1,6 @@
 
 
-// Check if the user is not logged in, redirect them to the login page
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: /login_pg.php');
-    exit;
-}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,9 +83,7 @@ tr:nth-child(even) {
 <body>
     <nav>
         <a href="/home_pg.php">Home</a>
-        <form method="post" action="">
-            <button type="submit" name="logout">Logout</button>
-        </form>
+        <a href="/login_pg.php">Login</a> 
         <a href="/register_pg.php">Register</a>
         <!-- Add more navigation links as needed -->
     </nav>
@@ -126,20 +120,6 @@ tr:nth-child(even) {
             </tr>
         </tbody>
     </table>
-     <?php
-    // PHP code for handling logout functionality (same as mentioned in previous examples)
-    session_start();
-    if (isset($_POST['logout'])) {
-        // Unset all session variables
-        $_SESSION = [];
-        
-        // Destroy the session
-        session_destroy();
-
-        // Redirect to the login page or any other page after logout
-        header('Location: /login_pg.php');
-        exit;
-    }
-    ?>
+   
 </body>
 </html>
