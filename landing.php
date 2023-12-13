@@ -141,7 +141,7 @@ form {
     <tbody>
           <?php
             function scrape_player_data($playerName) {
-                $url = 'https://lol.fandom.com/wiki/' . urlencode($playerName);
+                $url = 'https://lol.fandom.com/wiki/' . urlencode($playerName) . '/Statistics';
                 $response = file_get_contents($url);
 
                 if ($response !== false) {
