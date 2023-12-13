@@ -141,7 +141,7 @@ form {
     <tbody>
           <?php
             function scrape_player_data($playerName) {
-                $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics' . urlencode($playerName);
+                $url = 'https://lol.fandom.com/wiki/' . urlencode($playerName);
                 $response = file_get_contents($url);
 
                 if ($response !== false) {
