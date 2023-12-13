@@ -110,7 +110,7 @@ form {
     <h1>League of Legends Stats</h1>
     <!-- Search form for LolID input -->
     <form method="post" action="">
-        <input type="text" name="lolID" placeholder="Enter LolID">
+        <input type="text" name="playerName" placeholder="Enter Player Name">
         <button type="submit" name="search">Search</button>
     </form>
     <table>
@@ -138,9 +138,10 @@ form {
                 <!-- Add other headers as required -->
             </tr>
         </thead>
-       <tbody>
+    <tbody>
             <?php
-            function scrape_player_data($url) {
+            function scrape_player_data($playerName) {
+                $url = 'https://lol.fandom.com/wiki/' . urlencode($playerName);
                 $response = file_get_contents($url);
 
                 // Check if the request was successful
@@ -165,9 +166,8 @@ form {
             }
 
             if (isset($_POST['search'])) {
-                $lolID = $_POST['lolID'];
-                $url = 'https://lol.fandom.com/wiki/' . $lolID;
-                scrape_player_data($url);
+                $playerName = $_POST['playerName'];
+                scrape_player_data($playerName);
             }
             ?>
         </tbody>
