@@ -17,6 +17,13 @@
             min-height: 100vh;
             color: #fff;
         }
+        .error-box {
+            background-color: #f44336;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: <?php echo ($error_message !== '') ? 'block' : 'none'; ?>;
 
         .navbar {
             background-color: #000;
@@ -137,7 +144,7 @@
         </ul>
     </div>
 
-    
+     
 
     <div class="registration-container">
         <h2>User Registration</h2>
@@ -161,6 +168,14 @@
             <input type="submit" value="Register">
         </form>
         <a href="/login_pg.php">Back to Login</a>
+    </div>
+
+     <div class="error-box">
+        <?php if ($error_message !== ''): ?>
+            <p><?php echo $error_message; ?></p>
+        <?php else: ?>
+            <p>No error message.</p>
+        <?php endif; ?>
     </div>
 
     <script>
