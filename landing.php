@@ -101,27 +101,40 @@ form {
             border: none;
             cursor: pointer;
         }
-        .search-container {
+     .search-container {
             margin-top: 20px;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
 
         .search-container input[type="text"] {
             padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            background: #fff;
             width: 300px; /* Adjust width as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .search-container input[type="text"]:focus {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
         .search-container button[type="submit"] {
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 25px;
             background-color: #f1c40f;
             color: #333;
             border: none;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .search-container button[type="submit"]:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
