@@ -3,8 +3,7 @@
 <head>
     <title>League of Legends Stats</title>
     <img src='logo.png' alt='Logo Image'>
-
-      <style>
+   <style>
         /* Your CSS styling here */
         body {
             font-family: 'Arial', sans-serif;
@@ -18,7 +17,8 @@
         }
 
         img {
-            margin-top: 20px;
+            margin-top: 60px;
+            margin-bottom: 20px;
             max-width: 100%; /* Ensures the logo doesn't exceed its container */
         }
 
