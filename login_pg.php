@@ -6,16 +6,53 @@
     <title>Login</title>
     <style>
         /* Styles for body, background, and container */
-       body {
+          body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #2980b9, #6dd5fa);
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center; 
-            min-height: 100vh;
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+        }
+
+        nav {
+            background-color: #000;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            border: 1px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        nav a.active {
+            background-color: #f1c40f;
+            color: #333;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
         }
 
         .login-container {
@@ -26,6 +63,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 30px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         /* Styles for login form */
@@ -88,56 +126,6 @@
         .error-message {
             color: red;
             margin-top: 10px;
-        }
-
-        nav {
-            background-color: #000;
-            width: 100%;
-            padding: 15px 0;
-            text-align: center;
-            position: absolute;
-            top: 0;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            margin: 0 10px;
-            border: 1px solid transparent;
-        }
-
-        nav a:hover {
-            background-color: #fff;
-            color: #000;
-        }
-
-        nav a.active {
-            background-color: #f1c40f;
-            color: #333;
-        }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 40px; /* Increased margin to create more space */
-            margin-top: 60px; /* Adjusted margin-top to provide space below the navbar */
-        }
-
-        .logo-container img {
-            max-width: 100%;
-            height: auto;
-        }
-        .login-container {
-            width: 90%;
-            max-width: 400px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            text-align: center;
-            margin-top: 20px; /* Added margin-top to align with the nav bar */
-        }
 
         /* Styles for forgot password link */
         .forgot-password {
