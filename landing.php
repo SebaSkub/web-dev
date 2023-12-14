@@ -90,57 +90,80 @@
         <!-- Add more navigation links as needed -->
     </nav>
         <h1>Leaderboard</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Player Name</th>
-                <th>Team</th>
-                <th>Games Played</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Win Rate</th>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>Assists</th>
-                <th>KDA</th>
-                <th>CS</th>
-                <th>CS/M</th>
-                <th>Gold</th>
-                <th>Gold/Min</th>
-                <th>Damage</th>
-                <th>Damage/Min</th>
-                <th>Kill Participation</th>
-                <th>Kill Share</th>
-                <th>Gold Share</th>
-                <!-- Add other headers as needed -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for player_data in leaderboard_data %}
+    <div id="leaderboard-container">
+        <h2>Leaderboard</h2>
+        <table id="leaderboard-table">
+            <!-- Table content will be populated dynamically -->
+            <thead>
                 <tr>
-                    <td>{{ player_data.player_name }}</td>
-                    <td>{{ player_data.team }}</td>
-                    <td>{{ player_data.games_played }}</td>
-                    <td>{{ player_data.wins }}</td>
-                    <td>{{ player_data.losses }}</td>
-                    <td>{{ player_data.win_rate }}</td>
-                    <td>{{ player_data.kills }}</td>
-                    <td>{{ player_data.deaths }}</td>
-                    <td>{{ player_data.assists }}</td>
-                    <td>{{ player_data.kda }}</td>
-                    <td>{{ player_data.cs }}</td>
-                    <td>{{ player_data.cs_per_min }}</td>
-                    <td>{{ player_data.gold }}</td>
-                    <td>{{ player_data.gold_per_min }}</td>
-                    <td>{{ player_data.damage }}</td>
-                    <td>{{ player_data.damage_per_min }}</td>
-                    <td>{{ player_data.kill_participation }}</td>
-                    <td>{{ player_data.kill_share }}</td>
-                    <td>{{ player_data.gold_share }}</td>
-                    <!-- Add other player data fields as needed -->
+                    <th>Player Name</th>
+                    <th>Team</th>
+                    <th>Games Played</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Win Rate</th>
+                    <th>Kills</th>
+                    <th>Deaths</th>
+                    <th>Assists</th>
+                    <th>KDA</th>
+                    <th>CS</th>
+                    <th>CS/M</th>
+                    <th>Gold</th>
+                    <th>Gold/Min</th>
+                    <th>Damage</th>
+                    <th>Damage/Min</th>
+                    <th>Kill Participation</th>
+                    <th>Kill Share</th>
+                    <th>Gold Share</th>
+                    <!-- Add other headers based on your knowledge -->
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <!-- Table content will be populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <?php
+    // URL to scrape
+    $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics';
+
+    // Get the HTML of the page
+    $html = file_get_contents($url);
+
+    // Create a DOMDocument object
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true); // Suppress errors caused by invalid HTML
+    $dom->loadHTML($html);
+    libxml_clear_errors();
+
+    // Find the table with player statistics
+    $tables = $dom->getElementsByTagName('table');
+    foreach ($tables as $table) {
+        $classAttribute = $table->getAttribute('class');
+        if (strpos($classAttribute, 'wikitable') !== false) {
+            $tbody = $table->getElementsByTagName('tbody')->item(0);
+            $rows = $tbody->getElementsByTagName('tr');
+
+            // Display the data in a table
+            echo '<script>';
+            echo 'var tableContent = "<tbody>"';
+            foreach ($rows as $row) {
+                $cells = $row->getElementsByTagName('td');
+                if ($cells->length > 0) {
+                    echo 'tableContent += "<tr>"';
+                    foreach ($cells as $cell) {
+                        echo 'tableContent += "<td>"' . $cell->nodeValue . '"</td>"';
+                    }
+                    echo 'tableContent += "</tr>"';
+                }
+            }
+            echo 'tableContent += "</tbody>";';
+            echo 'document.getElementById("leaderboard-table").innerHTML = tableContent;';
+            echo '</script>';
+        }
+    }
+    ?>
+
 </body>
 </html>
