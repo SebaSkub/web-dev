@@ -49,7 +49,7 @@ def scrape_leaderboard_data():
     else:
         return None
 
-@app.route('/leaderboard')
+@app.route('/landing.php')
 def show_leaderboard():
     leaderboard_data = scrape_leaderboard_data()
     if leaderboard_data:
