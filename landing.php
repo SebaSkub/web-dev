@@ -104,20 +104,33 @@
             $scraped_data = scrape_player_data($url);
 
             if ($scraped_data) {
-                // Display data in a leaderboard format
-                $rank = 1;
-                foreach ($scraped_data as $row) {
-                    echo "<tr>";
-                    echo "<td>{$rank}</td>"; // Display rank
-                    foreach ($row as $cell) {
-                        echo "<td>" . $cell . "</td>";
-                    }
-                    echo "</tr>";
-                    $rank++;
-                }
-            } else {
-                echo "<tr><td colspan='18'>No data available.</td></tr>";
-            }
+    foreach ($scraped_data as $player) {
+        echo "<tr>";
+        echo "<td>" . $player['PlayerName'] . "</td>";
+        echo "<td>" . $player['Team'] . "</td>";
+        echo "<td>" . $player['GamesPlayed'] . "</td>";
+        echo "<td>" . $player['Wins'] . "</td>";
+        echo "<td>" . $player['Losses'] . "</td>";
+        echo "<td>" . $player['WinRate'] . "</td>";
+        echo "<td>" . $player['Kills'] . "</td>";
+        echo "<td>" . $player['Deaths'] . "</td>";
+        echo "<td>" . $player['Assists'] . "</td>";
+        echo "<td>" . $player['KDA'] . "</td>";
+        echo "<td>" . $player['CS'] . "</td>";
+        echo "<td>" . $player['CSPerMin'] . "</td>";
+        echo "<td>" . $player['Gold'] . "</td>";
+        echo "<td>" . $player['GoldPerMin'] . "</td>";
+        echo "<td>" . $player['Damage'] . "</td>";
+        echo "<td>" . $player['DamagePerMin'] . "</td>";
+        echo "<td>" . $player['KillParticipation'] . "</td>";
+        echo "<td>" . $player['KillShare'] . "</td>";
+        echo "<td>" . $player['GoldShare'] . "</td>";
+        // Add other cells for additional data
+        echo "</tr>";
+    }
+} else {
+    echo "<tr><td colspan='19'>No data available.</td></tr>";
+}
             ?>
         </tbody>
     </table>
