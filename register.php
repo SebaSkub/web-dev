@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Waiting for a response
     $callback = function ($msg) {
         $response = $msg->body;
+            echo "<script>alert('{$response}');</script>";
         
         // Handling different responses from RabbitMQ
         if (strcmp($response, $registerSuccess)==0) {
