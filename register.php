@@ -60,9 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
         elseif ($response === "Username already exists in table") {
         // Displaying an error message as HTML
-            alert('Username already exists please try again.')
+            echo '<script>alert('Username already exists please try again.')</script>';
         } else { 
-            alert('User Registration was unsuccessful. Please try again.')
+            echo '<script>alert('User Registration was unsuccessful. Please try again.')</script>';
         }
     } else {
         header("Location: /login_pg.php");
