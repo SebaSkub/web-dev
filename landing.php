@@ -144,15 +144,14 @@
 </head>
 <body>
     <nav>
-        <a href="/home_pg.php">Home</a>
-        <a href="/login_pg.php">Logout</a> 
-        <a href="/register_pg.php">Register</a>
-        <!-- Add more navigation links as needed -->
+        <a href="/">Home</a>
+        <!-- Modify these links as needed -->
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
     </nav>
     <h1>League of Legends Stats</h1>
-    <!-- Search form for LolID input -->
     <div class="search-container">
-        <form method="post" action="">
+        <form method="post" action="/">
             <input type="text" name="playerName" placeholder="Enter Player Name">
             <button type="submit" name="search">Search</button>
         </form>
@@ -183,9 +182,32 @@
             </tr>
         </thead>
         <tbody>
-            <?php
-            // Your PHP code here
-            ?>
+            {% if player_data %}
+                {% for player in player_data %}
+                    <tr>
+                        <td>{{ player.name }}</td>
+                        <td>{{ player.team }}</td>
+                        <td>{{ player.games_played }}</td>
+                        <td>{{ player.wins }}</td>
+                        <td>{{ player.losses }}</td>
+                        <td>{{ player.win_rate }}</td>
+                        <td>{{ player.kills }}</td>
+                        <td>{{ player.deaths }}</td>
+                        <td>{{ player.assists }}</td>
+                        <td>{{ player.kda }}</td>
+                        <td>{{ player.cs }}</td>
+                        <td>{{ player.cs_per_min }}</td>
+                        <td>{{ player.gold }}</td>
+                        <td>{{ player.gold_per_min }}</td>
+                        <td>{{ player.damage }}</td>
+                        <td>{{ player.damage_per_min }}</td>
+                        <td>{{ player.kill_participation }}</td>
+                        <td>{{ player.kill_share }}</td>
+                        <td>{{ player.gold_share }}</td>
+                        <!-- Add other fields as required -->
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 </body>
