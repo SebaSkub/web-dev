@@ -1,4 +1,4 @@
-?php
+<?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 // Including the Composer autoloader for RabbitMQ library
@@ -24,7 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['email'];
     $first_name = $_POST['firstName'];
     $last_name = $_POST['lastName'];
-	@@ -30,10 +37,11 @@
+    $dob = $_POST['dob'];
+    $age = $_POST['age'];
+    $lol_id = $_POST['lolId'];
+    $steam_link = $_POST['steamLink'];
+    $security_question1 = $_POST['securityQuestion1'];
+    $security_question2 = $_POST['securityQuestion2'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
     // Prepare the data as a comma-separated string
     $registration_data = "$email,$first_name,$last_name,$dob,$age,$lol_id,$steam_link,$security_question1,$security_question2,$username,$password";
 
@@ -36,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $channelSend->close();
     $connectionSend->close();
 
-	@@ -42,54 +50,58 @@
+    // Receiving Data 
+    $connectionReceive = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
     $channelReceive = $connectionReceive->channel();
     $channelReceive->queue_declare($rabbitmq_queue_receive, false, true, false, false);
 
@@ -48,34 +57,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($response === "User Registration was successful -- Database, Backend") {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
             exit;
-        } elseif ($response === "Username already exists in table") {
-            // Displaying an error message for unsuccessful registration
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var errorBox = document.createElement('div');
-                    errorBox.className = 'error-box';
-                    errorBox.innerHTML = 'Username Already Exists. Please try again.';
-                    document.body.appendChild(errorBox);
-                    setTimeout(function() { 
-                        document.body.removeChild(errorBox);	
-                    }, 5000);  // Remove the box after 5 seconds
-                });
-            </script>";
-            exit;
-        } else {
-            // Displaying an error message for existing username
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var errorBox = document.createElement('div');
-                    errorBox.className = 'error-box';
-                    errorBox.innerHTML = 'Invalid Registration. Please try again.';
-                    document.body.appendChild(errorBox);
-                    setTimeout(function() { 
-                        document.body.removeChild(errorBox);	
-                    }, 5000);  // Remove the box after 5 seconds
-                });
-            </script>";
-            exit;
+        }
+        elseif ($response === "Username already exists in table") {
+        // Displaying an error message as HTML
+            alert('Username already exists please try again.')
+        } else { 
+            alert('User Registration was unsuccessful. Please try again.')
+        }
+    } else {
+        header("Location: /login_pg.php");
+        exit;
+    }
+}
         }
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     };
@@ -93,3 +86,5 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Redirect to the login page after successful registration
     header("Location: /login_pg.php");
     exit;
+}
+?>
