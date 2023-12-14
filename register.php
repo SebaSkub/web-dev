@@ -80,3 +80,5 @@ $connectionReceive->close();
 // Redirect to the login page after processing the response
 header("Location: /login_pg.php");
 exit;
+}
+?>
