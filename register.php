@@ -45,16 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $response = $msg->body;
 
         // Handling different responses from RabbitMQ
-        if ($response === 'User Registration was successful -- Database, Backend') {
+        if ($response === "User Registration was successful -- Database, Backend") {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
             exit;
-        } elseif ($response === 'User Registration was unsuccessful -- Database, Backend') {
+        } elseif ($response === "Username already exists in table") {
             // Displaying an error message for unsuccessful registration
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
                     var errorBox = document.createElement('div');
                     errorBox.className = 'error-box';
-                    errorBox.innerHTML = 'Invalid Login. Please try again.';
+                    errorBox.innerHTML = 'Username Already Exists. Please try again.';
                     document.body.appendChild(errorBox);
                     setTimeout(function() { 
                         document.body.removeChild(errorBox);	
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 document.addEventListener('DOMContentLoaded', function() {
                     var errorBox = document.createElement('div');
                     errorBox.className = 'error-box';
-                    errorBox.innerHTML = 'Invalid Username, username already exists. Please try again.';
+                    errorBox.innerHTML = 'Invalid Registration. Please try again.';
                     document.body.appendChild(errorBox);
                     setTimeout(function() { 
                         document.body.removeChild(errorBox);	
