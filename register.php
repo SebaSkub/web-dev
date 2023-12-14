@@ -1,6 +1,7 @@
 <?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+
 // Including the Composer autoloader for RabbitMQ library
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -20,18 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $channelSend = $connectionSend->channel();
     $channelSend->queue_declare($rabbitmq_queue_send, false, true, false, false);
 
-    // Retrieving form data
-    $email = $_POST['email'];
-    $first_name = $_POST['firstName'];
-    $last_name = $_POST['lastName'];
-    $dob = $_POST['dob'];
-    $age = $_POST['age'];
-    $lol_id = $_POST['lolId'];
-    $steam_link = $_POST['steamLink'];
-    $security_question1 = $_POST['securityQuestion1'];
-    $security_question2 = $_POST['securityQuestion2'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    // Retrieving form data (Add appropriate checks for POST values)
+    $email = $_POST['email'] ?? '';
+    $first_name = $_POST['firstName'] ?? '';
+    $last_name = $_POST['lastName'] ?? '';
+    $dob = $_POST['dob'] ?? '';
+    $age = $_POST['age'] ?? '';
+    $lol_id = $_POST['lolId'] ?? '';
+    $steam_link = $_POST['steamLink'] ?? '';
+    $security_question1 = $_POST['securityQuestion1'] ?? '';
+    $security_question2 = $_POST['securityQuestion2'] ?? '';
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
 
     // Prepare the data as a comma-separated string
     $registration_data = "$email,$first_name,$last_name,$dob,$age,$lol_id,$steam_link,$security_question1,$security_question2,$username,$password";
@@ -57,24 +58,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($response === "User Registration was successful -- Database, Backend") {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
             exit;
-        }
-        elseif ($response === "Username already exists in table") {
-        // Displaying an error message as HTML
-            echo '<script>alert('Username already exists please try again.')</script>';
+        } elseif ($response === "Username already exists in table") {
+            echo '<script>alert("Username already exists. Please try again.");</script>';
         } else { 
-            echo '<script>alert('User Registration was unsuccessful. Please try again.')</script>';
+            echo '<script>alert("User Registration was unsuccessful. Please try again.");</script>';
         }
-    } else {
-        header("Location: /login_pg.php");
-        exit;
-    }
-}
-        }
-        $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     };
 
-    // Consume messages from the receive queue
     $channelReceive->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
+
     while (count($channelReceive->callbacks)) {
         $channelReceive->wait();
     }
