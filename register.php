@@ -49,16 +49,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $connectionReceive = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
     $channelReceive = $connectionReceive->channel();
     $channelReceive->queue_declare($rabbitmq_queue_receive, false, true, false, false);
-
+    $registerSuccess = "User Registration was successful -- Database, Backend";
+    $registerUser = "Username already exists in table";
     // Waiting for a response
     $callback = function ($msg) {
         $response = $msg->body;
-
+        
         // Handling different responses from RabbitMQ
-        if ($response === "User Registration was successful -- Database, Backend") {
+        if (str_contians($response, $registerSuccess)) {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
             exit;
-        } elseif ($response === "Username already exists in table") {
+        } elseif (str_contains($response, $registerUser)) {
             echo '<script>alert("Username already exists. Please try again.");</script>';
         } else { 
             echo '<script>alert("User Registration was unsuccessful. Please try again.");</script>';
