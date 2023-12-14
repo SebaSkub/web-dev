@@ -51,35 +51,31 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $channelReceive->queue_declare($rabbitmq_queue_receive, false, true, false, false);
    
     // Waiting for a response
-    $callback = function ($msg) {
-        $registerSuccess = "User Registration was successful -- Database, Backend";
-        $registerUser = "Username already exists in table";
-        $response = $msg->body;
-            echo "<script>alert('{$response}');</script>";
-        
-        // Handling different responses from RabbitMQ
-        if (strcmp($response, $registerSuccess)==0) {
-            header("Location:/login_pg.php"); // Redirect to login page on successful registration
-            exit;
-        } elseif (strcmp($response, $registerUser)==0) {
-            echo '<script>alert("Username already exists. Please try again.");</script>';
-        } else { 
-            echo '<script>alert("User Registration was unsuccessful. Please try again.");</script>';
-        }
-    };
+  $callback = function ($msg) {
+    $registerSuccess = "User Registration was successful -- Database, Backend";
+    $registerUser = "Username already exists in table";
+    $response = $msg->body;
 
-    $channelReceive->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
-
-    while (count($channelReceive->callbacks)) {
-        $channelReceive->wait();
+    if (strcmp($response, $registerSuccess) === 0) {
+        header("Location:/login_pg.php"); // Redirect to login page on successful registration
+        exit;
+    } elseif (strcmp($response, $registerUser) === 0) {
+        $_SESSION['error_message'] = "Username already exists. Please try again.";
+    } else { 
+        $_SESSION['error_message'] = "User Registration was unsuccessful. Please try again.";
     }
+};
 
-    // Close the receiving channel and connection
-    $channelReceive->close();
-    $connectionReceive->close();
+$channelReceive->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
 
-    // Redirect to the login page after successful registration
-    header("Location: /login_pg.php");
-    exit;
+while (count($channelReceive->callbacks)) {
+    $channelReceive->wait();
 }
-?>
+
+// Close the receiving channel and connection
+$channelReceive->close();
+$connectionReceive->close();
+
+// Redirect to the login page after processing the response
+header("Location: /login_pg.php");
+exit;
