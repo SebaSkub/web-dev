@@ -170,13 +170,6 @@
         <a href="/login_pg.php">Back to Login</a>
     </div>
 
-     <div class="error-box">
-        <?php if ($error_message !== ''): ?>
-            <p><?php echo $error_message; ?></p>
-        <?php else: ?>
-            <p>No error message.</p>
-        <?php endif; ?>
-    </div>
 
     <script>
         document.getElementById('generatePIN').addEventListener('click', function() {
