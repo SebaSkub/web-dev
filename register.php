@@ -49,11 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $connectionReceive = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
     $channelReceive = $connectionReceive->channel();
     $channelReceive->queue_declare($rabbitmq_queue_receive, false, true, false, false);
-    $registerSuccess = "User Registration was successful -- Database, Backend";
-    $registerUser = "Username already exists in table";
-    $response = "";
+   
     // Waiting for a response
     $callback = function ($msg) {
+        $registerSuccess = "User Registration was successful -- Database, Backend";
+        $registerUser = "Username already exists in table";
         $response = $msg->body;
             echo "<script>alert('{$response}');</script>";
         
