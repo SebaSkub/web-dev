@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,133 +7,78 @@
     <img src='logo.png' alt='Logo Image'>
 
     <style>
-     img {
+        img {
             margin-top: 50px; /* Adjust the margin-top value as needed */
         }
         /* Your CSS styling here */
-     body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #2980b9, #6dd5fa);
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-nav {
-    width: 100%;
-    background-color: #000;
-    padding: 15px 0;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    z-index: 999;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    margin: 0 10px;
-    border: 1px solid transparent;
-}
-
-nav a:hover {
-    background-color: #fff;
-    color: #000;
-}
-
-nav a.active {
-    background-color: #f1c40f;
-    color: #333;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 60px; /* Adjusted margin top to create space below the navbar */
-}
-
-table {
-    width: 80%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-th,
-td {
-    border: 1px solid #fff;
-    padding: 8px;
-    text-align: center;
-}
-
-th {
-    background-color: #333;
-}
-
-tr:nth-child(even) {
-    background-color: #444;
-form {
-            margin-top: 20px;
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #2980b9, #6dd5fa);
+            margin: 0;
+            padding: 0;
+            color: #fff;
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
-        input[type=text] {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
+        nav {
+            width: 100%;
+            background-color: #000;
+            padding: 15px 0;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            z-index: 999;
         }
 
-        button[type=submit] {
+        nav a {
+            color: #fff;
+            text-decoration: none;
             padding: 10px 20px;
             border-radius: 5px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            border: 1px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        nav a.active {
             background-color: #f1c40f;
             color: #333;
-            border: none;
-            cursor: pointer;
         }
-     .search-container {
+
+        h1 {
+            text-align: center;
+            margin-top: 60px; /* Adjusted margin top to create space below the navbar */
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
             margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .search-container input[type="text"] {
-            padding: 10px;
-            border-radius: 25px;
-            border: none;
-            outline: none;
-            background: #fff;
-            width: 300px; /* Adjust width as needed */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
+        th,
+        td {
+            border: 1px solid #fff;
+            padding: 8px;
+            text-align: center;
         }
 
-        .search-container input[type="text"]:focus {
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        th {
+            background-color: #333;
         }
 
-        .search-container button[type="submit"] {
-            padding: 10px 20px;
-            border-radius: 25px;
-            background-color: #f1c40f;
-            color: #333;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .search-container button[type="submit"]:hover {
-            transform: scale(1.05);
+        tr:nth-child(even) {
+            background-color: #444;
         }
     </style>
 </head>
