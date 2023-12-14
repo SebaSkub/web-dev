@@ -147,7 +147,7 @@
         .forgot-password:hover {
             text-decoration: underline;
         }
-        .logo-container {
+           .logo-container {
             text-align: center;
             margin-bottom: 20px; /* Adjust margin as needed */
         }
@@ -155,6 +155,17 @@
         .logo-container img {
             max-width: 100%;
             height: auto;
+        }
+
+        .login-container {
+            width: 90%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            margin: auto; /* Center the login container horizontally */
         }
     </style>
 </head>
