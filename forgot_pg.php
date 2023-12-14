@@ -12,8 +12,8 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center; 
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
             color: #fff;
         }
@@ -48,6 +48,18 @@
             color: #333;
         }
 
+        /* Styles for the logo */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px; /* Increased margin to create more space */
+            margin-top: 60px; /* Adjusted margin-top to provide space below the navbar */
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
         /* Styles for the forgot password container */
         .forgot-password-container {
             width: 90%;
@@ -58,6 +70,7 @@
             padding: 30px;
             text-align: center;
             margin-top: 20px;
+            margin-bottom: 20px; /* Adding margin at the bottom */
         }
 
         .forgot-password-container h2 {
@@ -112,6 +125,11 @@
         <a href="/login_pg.php">Login</a>
         <a href="/register_pg.php">Register</a>
     </nav>
+
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo Image">
+    </div>
 
     <!-- Forgot Password container -->
     <div class="forgot-password-container">
