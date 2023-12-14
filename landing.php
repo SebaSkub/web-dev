@@ -148,68 +148,72 @@ form {
     <h1>League of Legends Stats</h1>
     <!-- Search form for LolID input -->
     <div class="search-container">
-        <form method="post" action="">
+        <form method="post" action="" id="searchForm">
             <input type="text" name="playerName" placeholder="Enter Player Name">
             <button type="submit" name="search">Search</button>
         </form>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Player Name</th>
-                <th>Team</th>
-                <th>Games Played</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Win Rate</th>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>Assists</th>
-                <th>KDA</th>
-                <th>CS</th>
-                <th>CS/M</th>
-                <th>Gold</th>
-                <th>Gold/Min</th>
-                <th>Damage</th>
-                <th>Damage/Min</th>
-                <th>Kill Participation</th>
-                <th>Kill Share</th>
-                <th>Gold Share</th>
-                <!-- Add other headers as required -->
-            </tr>
-        </thead>
-    <tbody>
-          <?php
-            function scrape_player_data($playerName) {
-                $url = 'https://lol.fandom.com/wiki/' . urlencode($playerName) . '/Statistics';
-                $response = file_get_contents($url);
 
-                if ($response !== false) {
-                    $html = new DOMDocument();
-                    @$html->loadHTML($response);
-                    $xpath = new DOMXPath($html);
-
-                    $tableRows = $xpath->query("//table[contains(@class, 'wikitable')][2]/tbody/tr[position()>3]");
-
-                    foreach ($tableRows as $row) {
-                        echo "<tr>";
-                        foreach ($row->childNodes as $cell) {
-                            echo "<td>" . $cell->nodeValue . "</td>";
-                        }
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='18'>Failed to retrieve player data.</td></tr>";
-                }
-            }
-
-            if (isset($_POST['search'])) {
-                $playerName = $_POST['playerName'];
-                scrape_player_data($playerName);
-            }
-            ?>
-        </tbody>
+    <table id="playerStatsTable">
+        <!-- Table content will be populated here -->
     </table>
-   
+
+    <script>
+        function displayPlayerData(playerData) {
+            const table = document.getElementById('playerStatsTable');
+            const rows = playerData.split('\n');
+
+            rows.forEach(rowData => {
+                const row = table.insertRow();
+                const cells = rowData.split(' ');
+
+                cells.forEach(cellData => {
+                    const cell = row.insertCell();
+                    cell.textContent = cellData;
+                });
+            });
+        }
+
+        function scrapePlayerData(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(data, 'text/html');
+                    const targetTable = htmlDoc.querySelector('table.wikitable');
+
+                    if (targetTable) {
+                        const rowsToSkip = 5;
+                        const rows = targetTable.querySelectorAll('tr');
+
+                        let playerDataList = [];
+                        for (let i = rowsToSkip; i < rows.length; i++) {
+                            const cells = rows[i].querySelectorAll('td, th');
+                            let rowData = '';
+                            cells.forEach(cell => {
+                                rowData += cell.textContent.trim() + ' ';
+                            });
+                            playerDataList.push(rowData.trim());
+                        }
+
+                        const playerData = playerDataList.join('\n');
+                        displayPlayerData(playerData);
+                    } else {
+                        console.log('Table not found on the page.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Failed to retrieve the page.', error);
+                });
+        }
+
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const playerName = document.querySelector('input[name="playerName"]').value;
+            const baseUrl = 'https://lol.fandom.com/wiki/';
+            const url = `${baseUrl}${encodeURIComponent(playerName)}/Statistics`;
+            scrapePlayerData(url);
+        });
+    </script>
 </body>
 </html>
