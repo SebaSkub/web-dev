@@ -89,24 +89,31 @@
             </tr>
         </thead>
         <tbody>
-            tbody>
             <?php
+            // Function to scrape player data from Python script
             function scrape_player_data($url) {
                 $command = "python3 webscraper.py " . escapeshellarg($url);
                 $output = shell_exec($command);
                 return json_decode($output, true);
             }
 
+            // URL to scrape data from
             $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics';
+
+            // Get scraped data
             $scraped_data = scrape_player_data($url);
 
             if ($scraped_data) {
+                // Display data in a leaderboard format
+                $rank = 1;
                 foreach ($scraped_data as $row) {
                     echo "<tr>";
+                    echo "<td>{$rank}</td>"; // Display rank
                     foreach ($row as $cell) {
                         echo "<td>" . $cell . "</td>";
                     }
                     echo "</tr>";
+                    $rank++;
                 }
             } else {
                 echo "<tr><td colspan='18'>No data available.</td></tr>";
