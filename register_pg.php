@@ -124,15 +124,9 @@
         .registration-container a:hover {
             text-decoration: underline;
         }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 20px; /* Adjust margin as needed */
-        }
+       
 
-        .logo-container img {
-            max-width: 100%;
-            height: auto;
-        }
+     
     </style>
 </head>
 <body>
@@ -143,9 +137,7 @@
         </ul>
     </div>
 
-    <div class="logo-container">
-        <img src="logo.png" alt="Logo Image">
-    </div>
+    
 
     <div class="registration-container">
         <h2>User Registration</h2>
