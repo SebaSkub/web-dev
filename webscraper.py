@@ -1,39 +1,61 @@
+from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_player_data(url):
-    # Send an HTTP GET request to the website
+app = Flask(__name__)
+
+def scrape_leaderboard_data():
+    # Perform web scraping here to retrieve player statistics
+    url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics'
     response = requests.get(url)
 
-    # Check if the request was successful
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-        # Find the specific table you want to scrape
+        # Find and extract the table containing player statistics
         target_table = soup.find('table', {'class': 'wikitable'})
-
-        # Check if the table is found
         if target_table:
-            # Extract and accumulate the data for each player into a single string
-            rows_to_skip = 5
-            rows = target_table.find_all('tr')[rows_to_skip:]
+            rows = target_table.find_all('tr')[4:]  # Skip the header rows
 
-            player_data_list = []
+            leaderboard_data = []
             for row in rows:
-                # Extract and accumulate the data for each player into a single string
-                player_data = ' '.join(cell.get_text(strip=True) for cell in row.find_all(['td', 'th']))
-                player_data_list.append(player_data)
+                player_stats = [cell.get_text(strip=True) for cell in row.find_all(['th', 'td'])]
+                leaderboard_data.append({
+                    'player_name': player_stats[0],
+                    'team': player_stats[1],
+                    'games_played': player_stats[2],
+                    'wins': player_stats[3],
+                    'losses': player_stats[4],
+                    'win_rate': player_stats[5],
+                    'kills': player_stats[6],
+                    'deaths': player_stats[7],
+                    'assists': player_stats[8],
+                    'kda': player_stats[9],
+                    'cs': player_stats[10],
+                    'cs_per_min': player_stats[11],
+                    'gold': player_stats[12],
+                    'gold_per_min': player_stats[13],
+                    'damage': player_stats[14],
+                    'damage_per_min': player_stats[15],
+                    'kill_participation': player_stats[16],
+                    'kill_share': player_stats[17],
+                    'gold_share': player_stats[18],
+                    # Add other statistics as needed
+                })
 
-            # Join all player data into a single string separated by newlines
-            result = '\n'.join(player_data_list)
-            print(result)
-
+            return leaderboard_data
         else:
-            print("Table not found on the page.")
-
+            return None
     else:
-        print(f"Failed to retrieve the page. Status code: {response.status_code}")
+        return None
 
-# Example usage:
-url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics'
-scrape_player_data(url)
+@app.route('/leaderboard')
+def show_leaderboard():
+    leaderboard_data = scrape_leaderboard_data()
+    if leaderboard_data:
+        return render_template('leaderboard.html', leaderboard_data=leaderboard_data)
+    else:
+        return "Failed to retrieve leaderboard data"
+
+if __name__ == '__main__':
+    app.run(debug=True)
