@@ -4,7 +4,7 @@
     <title>League of Legends Stats</title>
     <img src='logo.png' alt='Logo Image'>
 
-    <style>
+     <style>
         /* Your CSS styling here */
         body {
             font-family: 'Arial', sans-serif;
@@ -15,6 +15,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        img {
+            margin-top: 20px;
+            max-width: 100%; /* Ensures the logo doesn't exceed its container */
         }
 
         nav {
@@ -49,18 +54,18 @@
 
         h1 {
             text-align: center;
-            margin-top: 60px; /* Adjusted margin top to create space below the navbar */
+            margin-top: 100px; /* Adjusted margin top to create space below the navbar */
         }
 
         table {
-            width: 100%; /* Updated width to fit the window */
-            max-width: 1200px; /* Added maximum width for better readability */
+            width: 95%; /* Adjusted width to avoid overflowing */
+            max-width: 1200px;
             border-collapse: collapse;
             margin-top: 20px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            overflow-x: auto; /* Allow horizontal scrolling if needed */
+            overflow-x: auto;
         }
 
         th,
@@ -113,7 +118,7 @@
             border: none;
             outline: none;
             background: #fff;
-            width: 300px; /* Adjust width as needed */
+            width: 300px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s ease;
         }
