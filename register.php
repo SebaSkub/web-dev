@@ -56,16 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $registerUser = "Username already exists in table";
     $response = $msg->body;
 
-    if (strcmp($response, $registerSuccess) === 0) {
+    if (str_contains($response, $registerSuccess)) {
         header("Location:/login_pg.php"); // Redirect to login page on successful registration
         exit;
-    } elseif (strcmp($response, $registerUser) === 0) {
+    } elseif (str_contains($response, $registerUser)) {
         $_SESSION['error_message'] = "Username already exists. Please try again.";
     } else { 
         $_SESSION['error_message'] = "User Registration was unsuccessful. Please try again.";
     }
+          $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 };
-
+        
 $channelReceive->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
 
 while (count($channelReceive->callbacks)) {
