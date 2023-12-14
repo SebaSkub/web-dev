@@ -104,7 +104,7 @@
             <p>
                 Join us to explore your strengths, identify areas for improvement, and compete with the best. Elevate your League of Legends experience with our comprehensive stat analysis and player comparison features.
             </p>
-            <img class="lol-image" src="download.jpeg" alt="League of Legends Image" />
+            <img class="lol-image" src="download.png" alt="League of Legends Image" />
         </div>
     </div>
 
