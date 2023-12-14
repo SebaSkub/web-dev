@@ -89,74 +89,60 @@
         <a href="/register_pg.php">Register</a>
         <!-- Add more navigation links as needed -->
     </nav>
-        <h1>Leaderboard</h1>
-    <div id="leaderboard-container">
-        <h2>Leaderboard</h2>
-        <table id="leaderboard-table">
-            <!-- Table content will be populated dynamically -->
-            <thead>
-                <tr>
-                    <th>Player Name</th>
-                    <th>Team</th>
-                    <th>Games Played</th>
-                    <th>Wins</th>
-                    <th>Losses</th>
-                    <th>Win Rate</th>
-                    <th>Kills</th>
-                    <th>Deaths</th>
-                    <th>Assists</th>
-                    <th>KDA</th>
-                    <th>CS</th>
-                    <th>CS/M</th>
-                    <th>Gold</th>
-                    <th>Gold/Min</th>
-                    <th>Damage</th>
-                    <th>Damage/Min</th>
-                    <th>Kill Participation</th>
-                    <th>Kill Share</th>
-                    <th>Gold Share</th>
-                    <!-- Add other headers based on your knowledge -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Table content will be populated dynamically -->
-            </tbody>
-        </table>
-    </div>
-
-<script>
     <?php
-    $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics';
-    $html = file_get_contents($url);
-    $dom = new DOMDocument();
-    libxml_use_internal_errors(true);
-    $dom->loadHTML($html);
-    libxml_clear_errors();
+    function scrapePlayerData($url) {
+        // Get the HTML content from the provided URL
+        $html = file_get_contents($url);
 
-    $tables = $dom->getElementsByTagName('table');
-    foreach ($tables as $table) {
-        $classAttribute = $table->getAttribute('class');
-        if (strpos($classAttribute, 'wikitable') !== false) {
-            $tbody = $table->getElementsByTagName('tbody')->item(0);
-            $rows = $tbody->getElementsByTagName('tr');
+        // Check if the request was successful
+        if ($html !== false) {
+            $dom = new DOMDocument();
+            libxml_use_internal_errors(true);
+            $dom->loadHTML($html);
+            libxml_clear_errors();
 
-            $tableContent = "<tbody>";
-            foreach ($rows as $row) {
-                $cells = $row->getElementsByTagName('td');
-                if ($cells->length > 0) {
-                    $tableContent .= "<tr>";
-                    foreach ($cells as $cell) {
-                        $tableContent .= "<td>" . $cell->nodeValue . "</td>";
-                    }
-                    $tableContent .= "</tr>";
+            // Find the specific table you want to scrape
+            $tables = $dom->getElementsByTagName('table');
+            $targetTable = null;
+            foreach ($tables as $table) {
+                $classAttribute = $table->getAttribute('class');
+                if (strpos($classAttribute, 'wikitable') !== false) {
+                    $targetTable = $table;
+                    break;
                 }
             }
-            $tableContent .= "</tbody>";
-            echo 'document.getElementById("leaderboard-table").innerHTML = \'' . $tableContent . '\';';
+
+            // Check if the table is found
+            if ($targetTable) {
+                // Extract and accumulate the data for each player into a single string
+                $rowsToSkip = 5;
+                $rows = $targetTable->getElementsByTagName('tr');
+                $playerDataList = [];
+                foreach ($rows as $index => $row) {
+                    if ($index >= $rowsToSkip) {
+                        $cells = $row->getElementsByTagName('td');
+                        $rowData = [];
+                        foreach ($cells as $cell) {
+                            $rowData[] = $cell->nodeValue;
+                        }
+                        $playerDataList[] = implode(' ', $rowData);
+                    }
+                }
+
+                // Join all player data into a single string separated by newlines
+                $result = implode("\n", $playerDataList);
+                echo $result;
+            } else {
+                echo "Table not found on the page.";
+            }
+        } else {
+            echo "Failed to retrieve the page.";
         }
     }
-    ?>
-</script>
 
+    // Example usage:
+    $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics';
+    scrapePlayerData($url);
+    ?>
 </body>
 </html>
