@@ -145,7 +145,7 @@
 <body>
     <nav>
         <a href="/home_pg.php">Home</a>
-        <a href="/login_pg.php">Login</a> 
+        <a href="/login_pg.php">Logout</a> 
         <a href="/register_pg.php">Register</a>
         <!-- Add more navigation links as needed -->
     </nav>
