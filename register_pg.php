@@ -124,6 +124,15 @@
         .registration-container a:hover {
             text-decoration: underline;
         }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px; /* Adjust margin as needed */
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +141,10 @@
             <li><a href="/login_pg.php">Login</a></li>
             <li><a href="/home_pg.php">Home</a></li>
         </ul>
+    </div>
+
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo Image">
     </div>
 
     <div class="registration-container">
