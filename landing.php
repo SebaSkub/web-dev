@@ -101,6 +101,28 @@ form {
             border: none;
             cursor: pointer;
         }
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            width: 300px; /* Adjust width as needed */
+        }
+
+        .search-container button[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f1c40f;
+            color: #333;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -112,10 +134,12 @@ form {
     </nav>
     <h1>League of Legends Stats</h1>
     <!-- Search form for LolID input -->
-    <form method="post" action="">
-        <input type="text" name="playerName" placeholder="Enter Player Name">
-        <button type="submit" name="search">Search</button>
-    </form>
+    <div class="search-container">
+        <form method="post" action="">
+            <input type="text" name="playerName" placeholder="Enter Player Name">
+            <button type="submit" name="search">Search</button>
+        </form>
+    </div>
     <table>
         <thead>
             <tr>
