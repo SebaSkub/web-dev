@@ -1,7 +1,7 @@
-
 <?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+
 // Including the Composer autoloader for RabbitMQ library
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -58,21 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($response === "User Registration was successful -- Database, Backend") {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
             exit;
-        }
-        elseif ($response === "Username already exists in table.") {
-        // Displaying an error message as HTML
-            alert('Username already exists please try again.')
+        } elseif ($response === "Username already exists in table.") {
+            echo '<script>alert("Username already exists. Please try again.");</script>';
         } else { 
-            alert('User Registration was Unsuccessful.')
+            echo '<script>alert("User Registration was Unsuccessful.");</script>';
         }
-    } else {
-        header("Location: /login_pg.php");
-        exit;
-    }
-}
-        }
-        $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     };
+
+    $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 
     // Consume messages from the receive queue
     $channelReceive->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
