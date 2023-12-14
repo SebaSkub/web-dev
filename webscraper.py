@@ -41,4 +41,21 @@ def scrape_player_data(url):
             return player_data_list
         else:
             return None
- 
+    else:
+        return None
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        player_name = request.form['playerName']
+        url = f'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics/{player_name}'  # Modify URL based on your data structure
+        player_data = scrape_player_data(url)
+        if player_data:
+            return render_template('landing.html', player_data=player_data)
+        else:
+            error_message = f"No data found for player '{player_name}'"
+            return render_template('landing.html', error=error_message)
+    return render_template('landing.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
