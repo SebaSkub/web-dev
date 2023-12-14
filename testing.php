@@ -19,7 +19,7 @@
         img {
             margin-top: 60px;
             margin-bottom: 20px;
-            max-width: 100%; /* Ensures the logo doesn't exceed its container */
+            max-width: 50%; /* Ensures the logo doesn't exceed its container */
         }
 
         nav {
