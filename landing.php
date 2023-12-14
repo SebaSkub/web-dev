@@ -89,26 +89,30 @@
             </tr>
         </thead>
         <tbody>
+            tbody>
             <?php
-            function scrape_player_data($playerName) {
-                $command = "python3 scrape_player_data.py " . escapeshellarg($playerName);
+            function scrape_player_data($url) {
+                $command = "python3 webscraper.py " . escapeshellarg($url);
                 $output = shell_exec($command);
-
-                echo "<tr><td colspan='18'>" . nl2br($output) . "</td></tr>";
+                return json_decode($output, true);
             }
 
-            if (isset($_POST['search'])) {
-                $playerName = $_POST['playerName'];
-                scrape_player_data($playerName);
+            $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics';
+            $scraped_data = scrape_player_data($url);
+
+            if ($scraped_data) {
+                foreach ($scraped_data as $row) {
+                    echo "<tr>";
+                    foreach ($row as $cell) {
+                        echo "<td>" . $cell . "</td>";
+                    }
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='18'>No data available.</td></tr>";
             }
             ?>
         </tbody>
     </table>
-
-    <!-- Your form for input -->
-    <form method="post" action="">
-        <input type="text" name="playerName" placeholder="Enter Player Name">
-        <button type="submit" name="search">Search</button>
-    </form>
 </body>
 </html>
