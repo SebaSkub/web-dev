@@ -8,6 +8,9 @@
     <img src='logo.png' alt='Logo Image'>
 
     <style>
+     img {
+            margin-top: 50px; /* Adjust the margin-top value as needed */
+        }
         /* Your CSS styling here */
      body {
     font-family: 'Arial', sans-serif;
