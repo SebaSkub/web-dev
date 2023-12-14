@@ -51,15 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $channelReceive->queue_declare($rabbitmq_queue_receive, false, true, false, false);
     $registerSuccess = "User Registration was successful -- Database, Backend";
     $registerUser = "Username already exists in table";
+    $response = "";
     // Waiting for a response
     $callback = function ($msg) {
         $response = $msg->body;
         
         // Handling different responses from RabbitMQ
-        if (str_contians($response, $registerSuccess)) {
+        if (strcmp($response, $registerSuccess)==0) {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
             exit;
-        } elseif (str_contains($response, $registerUser)) {
+        } elseif (strcmp($response, $registerUser)==0) {
             echo '<script>alert("Username already exists. Please try again.");</script>';
         } else { 
             echo '<script>alert("User Registration was unsuccessful. Please try again.");</script>';
