@@ -166,7 +166,7 @@
             <button class="register-btn" onclick="location.href='/register_pg.php'">Register Here</button>
             <p class="error-message" id="errorMessage"></p>
         </form>
-        <a href="/forgot_password.php" class="forgot-password">Forgot Password?</a>
+        <a href="/forgot_pg.php" class="forgot-password">Forgot Password?</a>
     </div>
 </body>
 </html>
