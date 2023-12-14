@@ -4,7 +4,7 @@
     <title>League of Legends Stats</title>
     <img src='logo.png' alt='Logo Image'>
 
-     <style>
+      <style>
         /* Your CSS styling here */
         body {
             font-family: 'Arial', sans-serif;
