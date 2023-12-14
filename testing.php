@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,79 +5,80 @@
     <img src='logo.png' alt='Logo Image'>
 
     <style>
-     img {
-            margin-top: 50px; /* Adjust the margin-top value as needed */
-        }
         /* Your CSS styling here */
-     body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #2980b9, #6dd5fa);
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #2980b9, #6dd5fa);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-nav {
-    width: 100%;
-    background-color: #000;
-    padding: 15px 0;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    z-index: 999;
-}
+        nav {
+            width: 100%;
+            background-color: #000;
+            padding: 15px 0;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+        }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    margin: 0 10px;
-    border: 1px solid transparent;
-}
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            border: 1px solid transparent;
+        }
 
-nav a:hover {
-    background-color: #fff;
-    color: #000;
-}
+        nav a:hover {
+            background-color: #fff;
+            color: #000;
+        }
 
-nav a.active {
-    background-color: #f1c40f;
-    color: #333;
-}
+        nav a.active {
+            background-color: #f1c40f;
+            color: #333;
+        }
 
-h1 {
-    text-align: center;
-    margin-top: 60px; /* Adjusted margin top to create space below the navbar */
-}
+        h1 {
+            text-align: center;
+            margin-top: 60px; /* Adjusted margin top to create space below the navbar */
+        }
 
-table {
-    width: 80%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+        table {
+            width: 100%; /* Updated width to fit the window */
+            max-width: 1200px; /* Added maximum width for better readability */
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
+        }
 
-th,
-td {
-    border: 1px solid #fff;
-    padding: 8px;
-    text-align: center;
-}
+        th,
+        td {
+            border: 1px solid #fff;
+            padding: 8px;
+            text-align: center;
+        }
 
-th {
-    background-color: #333;
-}
+        th {
+            background-color: #333;
+        }
 
-tr:nth-child(even) {
-    background-color: #444;
-form {
+        tr:nth-child(even) {
+            background-color: #444;
+        }
+
+        form {
             margin-top: 20px;
             display: flex;
             align-items: center;
@@ -101,7 +99,8 @@ form {
             border: none;
             cursor: pointer;
         }
-     .search-container {
+
+        .search-container {
             margin-top: 20px;
             display: flex;
             justify-content: center;
@@ -178,38 +177,11 @@ form {
                 <!-- Add other headers as required -->
             </tr>
         </thead>
-    <tbody>
-          <?php
-            function scrape_player_data($playerName) {
-                $url = 'https://lol.fandom.com/wiki/' . urlencode($playerName) . '/Statistics';
-                $response = file_get_contents($url);
-
-                if ($response !== false) {
-                    $html = new DOMDocument();
-                    @$html->loadHTML($response);
-                    $xpath = new DOMXPath($html);
-
-                    $tableRows = $xpath->query("//table[contains(@class, 'wikitable')][2]/tbody/tr[position()>3]");
-
-                    foreach ($tableRows as $row) {
-                        echo "<tr>";
-                        foreach ($row->childNodes as $cell) {
-                            echo "<td>" . $cell->nodeValue . "</td>";
-                        }
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='18'>Failed to retrieve player data.</td></tr>";
-                }
-            }
-
-            if (isset($_POST['search'])) {
-                $playerName = $_POST['playerName'];
-                scrape_player_data($playerName);
-            }
+        <tbody>
+            <?php
+            // Your PHP code here
             ?>
         </tbody>
     </table>
-   
 </body>
 </html>
