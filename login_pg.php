@@ -147,6 +147,15 @@
         .forgot-password:hover {
             text-decoration: underline;
         }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px; /* Adjust margin as needed */
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -155,6 +164,10 @@
         <a href="/home_pg.php">Home</a>
         <a href="/register_pg.php">Register</a>
     </nav>
+
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo Image">
+    </div>
 
     <!-- Login container -->
     <div class="login-container">
