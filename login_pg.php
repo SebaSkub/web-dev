@@ -129,7 +129,24 @@
             margin-top: 20px; /* Added margin-top to align with the nav bar */
         }
 
-        /* Rest of your styles... */
+        /* Styles for forgot password link */
+        .forgot-password {
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -149,6 +166,7 @@
             <button class="register-btn" onclick="location.href='/register_pg.php'">Register Here</button>
             <p class="error-message" id="errorMessage"></p>
         </form>
+        <a href="/forgot_password.php" class="forgot-password">Forgot Password?</a>
     </div>
 </body>
 </html>
