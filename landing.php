@@ -124,20 +124,15 @@
         </table>
     </div>
 
+<script>
     <?php
-    // URL to scrape
     $url = 'https://lol.fandom.com/wiki/LPL/2023_Season/Summer_Season/Player_Statistics';
-
-    // Get the HTML of the page
     $html = file_get_contents($url);
-
-    // Create a DOMDocument object
     $dom = new DOMDocument();
-    libxml_use_internal_errors(true); // Suppress errors caused by invalid HTML
+    libxml_use_internal_errors(true);
     $dom->loadHTML($html);
     libxml_clear_errors();
 
-    // Find the table with player statistics
     $tables = $dom->getElementsByTagName('table');
     foreach ($tables as $table) {
         $classAttribute = $table->getAttribute('class');
@@ -145,25 +140,23 @@
             $tbody = $table->getElementsByTagName('tbody')->item(0);
             $rows = $tbody->getElementsByTagName('tr');
 
-            // Display the data in a table
-            echo '<script>';
-            echo 'var tableContent = "<tbody>"';
+            $tableContent = "<tbody>";
             foreach ($rows as $row) {
                 $cells = $row->getElementsByTagName('td');
                 if ($cells->length > 0) {
-                    echo 'tableContent += "<tr>"';
+                    $tableContent .= "<tr>";
                     foreach ($cells as $cell) {
-                        echo 'tableContent += "<td>"' . $cell->nodeValue . '"</td>"';
+                        $tableContent .= "<td>" . $cell->nodeValue . "</td>";
                     }
-                    echo 'tableContent += "</tr>"';
+                    $tableContent .= "</tr>";
                 }
             }
-            echo 'tableContent += "</tbody>";';
-            echo 'document.getElementById("leaderboard-table").innerHTML = tableContent;';
-            echo '</script>';
+            $tableContent .= "</tbody>";
+            echo 'document.getElementById("leaderboard-table").innerHTML = \'' . $tableContent . '\';';
         }
     }
     ?>
+</script>
 
 </body>
 </html>
