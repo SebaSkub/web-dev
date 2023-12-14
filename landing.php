@@ -89,75 +89,58 @@
         <a href="/register_pg.php">Register</a>
         <!-- Add more navigation links as needed -->
     </nav>
-    <h1>League of Legends Stats</h1>
-    <!-- Search form for LolID input -->
-    <div class="search-container">
-        <form method="post" action="" id="searchForm">
-            <input type="text" name="playerName" placeholder="Enter Player Name">
-            <button type="submit" name="search">Search</button>
-        </form>
-    </div>
-
-    <table id="playerStatsTable">
-        <!-- Table content will be populated here -->
+        <h1>Leaderboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Player Name</th>
+                <th>Team</th>
+                <th>Games Played</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Win Rate</th>
+                <th>Kills</th>
+                <th>Deaths</th>
+                <th>Assists</th>
+                <th>KDA</th>
+                <th>CS</th>
+                <th>CS/M</th>
+                <th>Gold</th>
+                <th>Gold/Min</th>
+                <th>Damage</th>
+                <th>Damage/Min</th>
+                <th>Kill Participation</th>
+                <th>Kill Share</th>
+                <th>Gold Share</th>
+                <!-- Add other headers as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for player_data in leaderboard_data %}
+                <tr>
+                    <td>{{ player_data.player_name }}</td>
+                    <td>{{ player_data.team }}</td>
+                    <td>{{ player_data.games_played }}</td>
+                    <td>{{ player_data.wins }}</td>
+                    <td>{{ player_data.losses }}</td>
+                    <td>{{ player_data.win_rate }}</td>
+                    <td>{{ player_data.kills }}</td>
+                    <td>{{ player_data.deaths }}</td>
+                    <td>{{ player_data.assists }}</td>
+                    <td>{{ player_data.kda }}</td>
+                    <td>{{ player_data.cs }}</td>
+                    <td>{{ player_data.cs_per_min }}</td>
+                    <td>{{ player_data.gold }}</td>
+                    <td>{{ player_data.gold_per_min }}</td>
+                    <td>{{ player_data.damage }}</td>
+                    <td>{{ player_data.damage_per_min }}</td>
+                    <td>{{ player_data.kill_participation }}</td>
+                    <td>{{ player_data.kill_share }}</td>
+                    <td>{{ player_data.gold_share }}</td>
+                    <!-- Add other player data fields as needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
-
-    <script>
-        function displayPlayerData(playerData) {
-            const table = document.getElementById('playerStatsTable');
-            const rows = playerData.split('\n');
-
-            rows.forEach(rowData => {
-                const row = table.insertRow();
-                const cells = rowData.split(' ');
-
-                cells.forEach(cellData => {
-                    const cell = row.insertCell();
-                    cell.textContent = cellData;
-                });
-            });
-        }
-
-        function scrapePlayerData(url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const htmlDoc = parser.parseFromString(data, 'text/html');
-                    const targetTable = htmlDoc.querySelector('table.wikitable');
-
-                    if (targetTable) {
-                        const rowsToSkip = 5;
-                        const rows = targetTable.querySelectorAll('tr');
-
-                        let playerDataList = [];
-                        for (let i = rowsToSkip; i < rows.length; i++) {
-                            const cells = rows[i].querySelectorAll('td, th');
-                            let rowData = '';
-                            cells.forEach(cell => {
-                                rowData += cell.textContent.trim() + ' ';
-                            });
-                            playerDataList.push(rowData.trim());
-                        }
-
-                        const playerData = playerDataList.join('\n');
-                        displayPlayerData(playerData);
-                    } else {
-                        console.log('Table not found on the page.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Failed to retrieve the page.', error);
-                });
-        }
-
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const playerName = document.querySelector('input[name="playerName"]').value;
-            const baseUrl = 'https://lol.fandom.com/wiki/';
-            const url = `${baseUrl}${encodeURIComponent(playerName)}/Statistics`;
-            scrapePlayerData(url);
-        });
-    </script>
 </body>
 </html>
