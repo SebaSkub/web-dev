@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>League of Legends Stats</title>
-    <img src='logo.jpeg' alt='Logo Image'>
+    <img src='logo.png' alt='Logo Image'>
 
     <style>
         /* Your CSS styling here */
