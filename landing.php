@@ -154,10 +154,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
+        <a href="/home_pg.php">Home</a>
         <!-- Modify these links as needed -->
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <a href="/logout.php>Logout</a>
     </nav>
     <h1>League of Legends Stats</h1>
     <div class="search-container">
