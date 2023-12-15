@@ -133,7 +133,7 @@
     <!-- Forgot Password container -->
     <div class="forgot-password-container">
         <h2>Forgot Password</h2>
-        <form method="POST" action="forgot_password.php" id="forgotPasswordForm">
+        <form method="POST" action="forgot.php" id="forgotPasswordForm">
             <input type='text' id='username' name='username' placeholder="Username" aria-label="Username" required>
             <input type='text' id='securityWord' name='securityWord' placeholder="Security Word" aria-label="Security Word" required>
             <input type='text' id='securityPin' name='securityPin' placeholder="Security PIN" aria-label="Security PIN" required>
