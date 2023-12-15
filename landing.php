@@ -54,7 +54,7 @@
 
         h1 {
             text-align: center;
-            margin-top: 100px; /* Adjusted margin top to create space below the navbar */
+            margin-top: 20px; /* Adjusted margin top to create space below the navbar */
         }
 
         table {
@@ -71,7 +71,7 @@
         th,
         td {
             border: 1px solid #fff;
-            padding: 8px;
+            padding: 6px;
             text-align: center;
         }
 
