@@ -63,13 +63,13 @@ if (str_contains($response, "successful")) {
     // Displaying an error message for existing username and delaying redirection
     echo '<script>';
     echo 'alert("Username already exists. Please try again.");';
-    echo 'setTimeout(function() { window.location.href = "/register_pg.php"; }, 5000);';
+    echo 'setTimeout(function() { window.location.href = "/register_pg.php"; }, 2000);';
     echo '</script>';
 } else {
     // Displaying an error message during registration and delaying redirection
     echo '<script>';
     echo 'alert("Error occurred during Registration Process. Please try again.");';
-    echo 'setTimeout(function() { window.location.href = "/register_pg.php"; }, 5000);';
+    echo 'setTimeout(function() { window.location.href = "/register_pg.php"; }, 2000);';
     echo '</script>';
 }
 
