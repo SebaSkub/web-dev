@@ -219,6 +219,7 @@ $player_data = json_decode($scraped_data, true);
                 <th>Kill Participation</th>
                 <th>Kill Share</th>
                 <th>Gold Share</th>
+                <th>Champions Played</th>
                 <!-- Add other headers as required -->
             </tr>
         </thead>
@@ -246,6 +247,8 @@ $player_data = json_decode($scraped_data, true);
                     echo "<td>" . $player['kill_participation'] . "</td>";
                     echo "<td>" . $player['kill_share'] . "</td>";
                     echo "<td>" . $player['gold_share'] . "</td>";
+                    echo "<td>" . $player['champions_played'] . "</td>";
+
                     // Add other fields as required
                     echo "</tr>";
                 }
