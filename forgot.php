@@ -10,7 +10,7 @@ session_start(); // Start the session
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // RabbitMQ configurations
-    $rabbitmq_host = '10.198.120.138'; // Update with your RabbitMQ server host
+    $rabbitmq_host = '10.198.120.107'; // Update with your RabbitMQ server host
     $rabbitmq_port = 5672;
     $rabbitmq_user = 'it490';
     $rabbitmq_password = 'it490';
