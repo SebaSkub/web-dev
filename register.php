@@ -55,17 +55,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $response = utf8_decode($msg->body);
         // Handling different responses from RabbitMQ
        // Handling different responses from RabbitMQ
+// Handling different responses from RabbitMQ
 if (str_contains($response, "successful")) {
     header("Location:/login_pg.php"); // Redirect to login page on successful registration
     exit;
 } elseif (str_contains($response, "exists")) {
-    // Displaying an error message for existing username
-    echo '<script>alert("Username already exists. Please try again.");</script>';
-    echo '<script>setTimeout(function() { window.location.href = "/register_pg.php"; }, 5000);</script>'; // Delayed redirection after 5 seconds
+    // Displaying an error message for existing username and delaying redirection
+    echo '<script>';
+    echo 'alert("Username already exists. Please try again.");';
+    echo 'setTimeout(function() { window.location.href = "/register_pg.php"; }, 5000);';
+    echo '</script>';
 } else {
-    // Displaying an error message during registration 
-    echo '<script>alert("Error occurred during Registration Process. Please try again.");</script>';
-    echo '<script>setTimeout(function() { window.location.href = "/register_pg.php"; }, 5000);</script>'; // Delayed redirection after 5 seconds
+    // Displaying an error message during registration and delaying redirection
+    echo '<script>';
+    echo 'alert("Error occurred during Registration Process. Please try again.");';
+    echo 'setTimeout(function() { window.location.href = "/register_pg.php"; }, 5000);';
+    echo '</script>';
 }
 
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
