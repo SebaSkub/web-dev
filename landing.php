@@ -182,6 +182,7 @@ $player_data = json_decode($scraped_data, true);
         <form method="post" action="/">
             <input type="text" name="playerName" placeholder="Enter Player Name">
             <button type="submit" name="search">Search</button>
+            <button type="submit" name="scrape">Scrape</button>
         </form>
     </div>
     <table>
