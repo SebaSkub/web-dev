@@ -170,20 +170,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <tr>
                 <th>Player Name</th>
                 <th>Team</th>
-                <th>Games Played</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Win Rate</th>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>Assists</th>
+                <th>GP</th>
+                <th>W</th>
+                <th>L</th>
+                <th>W/L</th>
+                <th>K</th>
+                <th>D</th>
+                <th>A</th>
                 <th>KDA</th>
                 <th>CS</th>
                 <th>CS/M</th>
-                <th>Gold</th>
-                <th>Gold/Min</th>
+                <th>G</th>
+                <th>G/M</th>
                 <th>Damage</th>
-                <th>Damage/Min</th>
+                <th>Damage/M</th>
                 <th>Kill Participation</th>
                 <th>Kill Share</th>
                 <th>Gold Share</th>
