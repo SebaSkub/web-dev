@@ -1,3 +1,4 @@
+<?php
 // Including the Composer autoloader for RabbitMQ library
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -75,3 +76,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $channelReceive->close();
     $connectionReceive->close();
 }
+?>
