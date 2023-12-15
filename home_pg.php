@@ -1,3 +1,13 @@
+<?script>
+session_start(); // Start the session
+
+// Check if the user is not logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Redirect the user to the login page
+    header("Location: /login_pg.php");
+    exit;
+}
+<script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,8 +98,7 @@
     <div class="background"></div> <!-- Background container -->
 
     <nav>
-        <a href="/login_pg.php">Login</a>
-        <a href="/register_pg.php">Register</a>
+        <a href="/logout.php">Logout</a>
     </nav>
 
     <div class="content-container">
