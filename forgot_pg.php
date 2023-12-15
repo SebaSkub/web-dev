@@ -67,10 +67,10 @@
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 30px;
+            padding: 20px;
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 20px; /* Adding margin at the bottom */
+            margin-top: 10px;
+            margin-bottom: 10px; /* Adding margin at the bottom */
         }
 
         .forgot-password-container h2 {
