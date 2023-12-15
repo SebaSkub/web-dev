@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (str_contains($response, "successful")) {
             header("Location:/landing.php"); // Redirect to landing page on successful login
             exit;
-        } elseif (str_contains($response = "unsuccessful")) {
+        } elseif (str_contains($response, "unsuccessful")) {
             // Displaying an error message for unsuccessful login
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
