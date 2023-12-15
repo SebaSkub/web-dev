@@ -1,6 +1,13 @@
 <?php
 
+session_start(); // Start the session
 
+// Check if the user is not logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Redirect the user to the login page
+    header("Location: /login_pg.php");
+    exit;
+}
 // Function to trigger the Python script
 function triggerScraping() {
     // Command to run the Python script
