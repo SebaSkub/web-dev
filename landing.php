@@ -1,5 +1,4 @@
 
-<script>
 <!DOCTYPE html>
 <html>
 <head>
