@@ -43,13 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Waiting for a response
     $callback = function ($msg) {
-        $response = $msg->body;
+        $response = utf8_decode($msg->body);
 
         // Handling different responses from RabbitMQ
-        if ($response === 'User Login was successful -- Database, Backend') {
+        if (str_contains($response, "successful")) {
             header("Location:/landing.php"); // Redirect to landing page on successful login
             exit;
-        } elseif ($response === 'User Login was unsuccessful -- Database, Backend') {
+        } elseif (str_contains($response = "unsuccessful")) {
             // Displaying an error message for unsuccessful login
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
