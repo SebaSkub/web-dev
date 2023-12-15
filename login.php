@@ -4,6 +4,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 require_once __DIR__ . '/vendor/autoload.php';
+session_start(); // Start the session
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Handling different responses from RabbitMQ
         if (str_contains($response, "successful")) {
+            $_SESSION['loggedin'] = true; // Set session variable for logged-in user
             header("Location:/landing.php"); // Redirect to landing page on successful login
             exit;
         } elseif (str_contains($response, "unsuccessful")) {
