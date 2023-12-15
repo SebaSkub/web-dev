@@ -4,7 +4,6 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 require_once __DIR__ . '/vendor/autoload.php';
-session_start(); // Start the session
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rabbitmq_port = 5672;
     $rabbitmq_user = 'it490';
     $rabbitmq_password = 'it490';
-    $rabbitmq_queue_send = 'forgotPassword_FTOB'; // Outbound queue name
-    $rabbitmq_queue_receive = 'forgotPassword_BTOF'; // Inbound queue name
+    $rabbitmq_queue_send = 'changePassword_FTOB'; // Outbound queue name
+    $rabbitmq_queue_receive = 'changePassword_BTOF'; // Inbound queue name
 
     // Retrieving form data
     $username = $_POST['username'];
