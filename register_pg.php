@@ -134,7 +134,6 @@
     <div class="navbar">
         <ul class="navbar-links">
             <li><a href="/login_pg.php">Login</a></li>
-            <li><a href="/home_pg.php">Home</a></li>
         </ul>
     </div>
 
