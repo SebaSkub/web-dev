@@ -4,13 +4,12 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 require_once __DIR__ . '/vendor/autoload.php';
-session_start(); // Start the session
-
+session_start(); 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // RabbitMQ configurations
-    $rabbitmq_host = '10.198.120.107'; // Update with your RabbitMQ server host
+    $rabbitmq_host = '10.198.120.138'; // Update with your RabbitMQ server host
     $rabbitmq_port = 5672;
     $rabbitmq_user = 'it490';
     $rabbitmq_password = 'it490';
@@ -44,14 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Waiting for a response
     $callback = function ($msg) {
-        $response = utf8_decode($msg->body);
+        $response = $msg->body;
 
         // Handling different responses from RabbitMQ
-        if (str_contains($response, "successful")) {
-            $_SESSION['loggedin'] = true; // Set session variable for logged-in user
+        if ($response === 'User Login was successful -- Database, Backend') {
+            $_SESSION['loggedin'] = true;
             header("Location:/home_pg.php"); // Redirect to landing page on successful login
             exit;
-        } elseif (str_contains($response, "unsuccessful")) {
+        } elseif ($response === 'User Login was unsuccessful -- Database, Backend') {
             // Displaying an error message for unsuccessful login
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
