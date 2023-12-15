@@ -54,22 +54,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
    $callback = function ($msg) {
         $response = utf8_decode($msg->body);
         // Handling different responses from RabbitMQ
-        session_start(); // Start the session
+        if (str_contains($response, "successful")) {
+            header("Location:/login_pg.php"); // Redirect to login page on successful registration
+            exit;
+        } elseif (str_contains($response, "exists")) {
+            // Displaying an error message for existing username
+            echo '<script>alert("Username already exists. Please try again.");</script>';
+            sleep(10);
+            header("Location:/register_pg.php"); // Redirect to login page on successful registration
+        } else {
+            // Displaying an error message during registration 
+            echo '<script>alert("Error occurred during Registration Process. Please try again.");</script>';
+            sleep(10);
+            header("Location:/register_pg.php"); // Redirect to login page on successful registration
 
-if (str_contains($response, "successful")) {
-    header("Location: /login_pg.php"); // Redirect to login page on successful registration
-    exit;
-} elseif (str_contains($response, "exists")) {
-    // Storing the error message in a session variable for existing username
-    $_SESSION['error'] = "Username already exists. Please try again.";
-    header("Location: /register_pg.php"); // Redirect back to registration page
-    exit;
-} else {
-    // Storing the error message for any other registration error
-    $_SESSION['error'] = "Error occurred during Registration Process. Please try again.";
-    header("Location: /register_pg.php"); // Redirect back to registration page
-    exit;
-}
+        }
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     };
 
