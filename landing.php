@@ -26,7 +26,7 @@ if (isset($_POST['scrape'])) {
 $scraped_data = file_get_contents('scraped_data.txt'); // Change the file name as needed
 $player_data = json_decode($scraped_data, true);
 ?>
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
