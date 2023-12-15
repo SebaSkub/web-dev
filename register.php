@@ -53,12 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Waiting for a response
     $callback = function ($msg) {
         $response = $msg->body;
-
         // Handling different responses from RabbitMQ
-        if ($response === 'User Registration was successful -- Database, Backend') {
+        if (str_contains($response, "successful")) {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
             exit;
-        } elseif ($response === 'User Registration was unsuccessful -- Database, Backend') {
+        } elseif (str_contains($response, "exists")) {
             // Displaying an error message for unsuccessful registration
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -102,8 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $channelReceive->close();
     $connectionReceive->close();
 
-    // Redirect to the login page after successful registration
-    header("Location: /login_pg.php");
-    exit;
+ 
 }
 ?>
