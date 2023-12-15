@@ -156,7 +156,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <nav>
         <a href="/home_pg.php">Home</a>
         <!-- Modify these links as needed -->
-        <a href="/logout.php>Logout</a>
+        <a href="/logout.php">Logout</a>
     </nav>
     <h1>League of Legends Stats</h1>
     <div class="search-container">
@@ -191,32 +191,36 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             </tr>
         </thead>
         <tbody>
-            {% if player_data %}
-                {% for player in player_data %}
-                    <tr>
-                        <td>{{ player.name }}</td>
-                        <td>{{ player.team }}</td>
-                        <td>{{ player.games_played }}</td>
-                        <td>{{ player.wins }}</td>
-                        <td>{{ player.losses }}</td>
-                        <td>{{ player.win_rate }}</td>
-                        <td>{{ player.kills }}</td>
-                        <td>{{ player.deaths }}</td>
-                        <td>{{ player.assists }}</td>
-                        <td>{{ player.kda }}</td>
-                        <td>{{ player.cs }}</td>
-                        <td>{{ player.cs_per_min }}</td>
-                        <td>{{ player.gold }}</td>
-                        <td>{{ player.gold_per_min }}</td>
-                        <td>{{ player.damage }}</td>
-                        <td>{{ player.damage_per_min }}</td>
-                        <td>{{ player.kill_participation }}</td>
-                        <td>{{ player.kill_share }}</td>
-                        <td>{{ player.gold_share }}</td>
-                        <!-- Add other fields as required -->
-                    </tr>
-                {% endfor %}
-            {% endif %}
+            <?php
+            if ($player_data) {
+                foreach ($player_data as $player) {
+                    echo "<tr>";
+                    echo "<td>" . $player['name'] . "</td>";
+                    echo "<td>" . $player['team'] . "</td>";
+                    echo "<td>" . $player['games_played'] . "</td>";
+                    echo "<td>" . $player['wins'] . "</td>";
+                    echo "<td>" . $player['losses'] . "</td>";
+                    echo "<td>" . $player['win_rate'] . "</td>";
+                    echo "<td>" . $player['kills'] . "</td>";
+                    echo "<td>" . $player['deaths'] . "</td>";
+                    echo "<td>" . $player['assists'] . "</td>";
+                    echo "<td>" . $player['kda'] . "</td>";
+                    echo "<td>" . $player['cs'] . "</td>";
+                    echo "<td>" . $player['cs_per_min'] . "</td>";
+                    echo "<td>" . $player['gold'] . "</td>";
+                    echo "<td>" . $player['gold_per_min'] . "</td>";
+                    echo "<td>" . $player['damage'] . "</td>";
+                    echo "<td>" . $player['damage_per_min'] . "</td>";
+                    echo "<td>" . $player['kill_participation'] . "</td>";
+                    echo "<td>" . $player['kill_share'] . "</td>";
+                    echo "<td>" . $player['gold_share'] . "</td>";
+                    // Add other fields as required
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='19'>No data available</td></tr>";
+            }
+            ?>
         </tbody>
     </table>
 </body>
