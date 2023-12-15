@@ -137,15 +137,7 @@
             <li><a href="/home_pg.php">Home</a></li>
         </ul>
     </div>
-<?php
-     session_start(); // Start the session
 
-// Check if an error message is set in the session
-if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-    echo '<script>alert("' . $_SESSION['error'] . '");</script>';
-    unset($_SESSION['error']); // Clear the error message from session after displaying
-}
-?>
     <div class="registration-container">
         <h2>User Registration</h2>
         <form id="registrationForm" action="register.php" method="POST">
