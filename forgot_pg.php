@@ -51,8 +51,8 @@
         /* Styles for the logo */
         .logo-container {
             text-align: center;
-            margin-bottom: 40px; /* Increased margin to create more space */
-            margin-top: 60px; /* Adjusted margin-top to provide space below the navbar */
+            margin-bottom: 5px; /* Increased margin to create more space */
+            margin-top: 55px; /* Adjusted margin-top to provide space below the navbar */
         }
 
         .logo-container img {
