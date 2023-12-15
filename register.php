@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     // Waiting for a response
     $callback = function ($msg) {
-        $response = $msg->body;
+        $response = utf8_decode($msg->body);
         // Handling different responses from RabbitMQ
         if (str_contains($response, "successful")) {
             header("Location:/login_pg.php"); // Redirect to login page on successful registration
