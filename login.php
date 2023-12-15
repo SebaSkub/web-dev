@@ -52,20 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } elseif ($response === 'User Login was unsuccessful -- Database, Backend') {
             // Displaying an error message for unsuccessful login
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var errorBox = document.createElement('div');
-                    errorBox.className = 'error-box';
-                    errorBox.innerHTML = 'Invalid Login. Please try again.';
-                    document.body.appendChild(errorBox);
-
-                    setTimeout(function() { 
-                        document.body.removeChild(errorBox);	
-                    }, 5000);  // Remove the box after 5 seconds
-                });
-            </script>";
-            exit;
-        }
+                
 
         // Acknowledge the message received
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
