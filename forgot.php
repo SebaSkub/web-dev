@@ -55,22 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirect to login page or display success message
             header("Location:/login_pg.php"); // Redirect to login page on successful password reset
             exit;
-        } elseif (str_contains($response, "unsuccessful")) {
+        } else {
             // Displaying an error message for unsuccessful password reset
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var errorBox = document.createElement('div');
-                    errorBox.className = 'error-box';
-                    errorBox.innerHTML = 'Password reset failed. Please try again.';
-                    document.body.appendChild(errorBox);
-
-                    setTimeout(function() { 
-                        document.body.removeChild(errorBox);	
-                    }, 5000);  // Remove the box after 5 seconds
-                });
-            </script>";
-            exit;
-        }
+         
+          echo '<script>';
+          echo 'alert("Change Password Unsuccessful, Please try again.");';
+          echo 'setTimeout(function() { window.location.href = "/forgot_pg.php"; }, 2000);';
+          echo '</script>';
 
         // Acknowledge the message received
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
