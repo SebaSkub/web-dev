@@ -65,7 +65,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 30px;
             text-align: center;
-            margin-top: 50px;
+            margin-top: 0px;
         }
 
         .registration-container h2 {
