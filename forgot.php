@@ -1,4 +1,3 @@
-<?php
 // Including the Composer autoloader for RabbitMQ library
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -56,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } else {
             // Displaying an error message for unsuccessful password reset
-         
-          echo '<script>';
-          echo 'alert("Change Password Unsuccessful, Please try again.");';
-          echo 'setTimeout(function() { window.location.href = "/forgot_pg.php"; }, 2000);';
-          echo '</script>';
+            echo '<script>';
+            echo 'alert("Change Password Unsuccessful, Please try again.");';
+            echo 'setTimeout(function() { window.location.href = "/forgot_pg.php"; }, 2000);';
+            echo '</script>';
+        }
 
         // Acknowledge the message received
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
@@ -76,4 +75,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $channelReceive->close();
     $connectionReceive->close();
 }
-?>
