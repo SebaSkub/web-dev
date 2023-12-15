@@ -98,6 +98,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <div class="background"></div> <!-- Background container -->
 
     <nav>
+        <a href="/landing.php">Player Stats</a>
         <a href="/logout.php">Logout</a>
     </nav>
 
