@@ -1,4 +1,4 @@
-<?script>
+<script>
 session_start(); // Start the session
 
 // Check if the user is not logged in
