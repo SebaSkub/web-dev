@@ -190,6 +190,11 @@ $player_data = json_decode($scraped_data, true);
             <input type="text" name="playerName" placeholder="Enter Player Name">
             <button type="submit" name="search">Search</button>
             <button type="submit" name="scrape">Scrape</button>
+            <select name="tableSelect">
+            <option value="USA">USA</option>
+            <option value="China">China</option>
+            <option value="Korea">Korea</option>
+        </select>
         </form>
     </div>
     <table>
