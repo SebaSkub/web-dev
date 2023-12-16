@@ -1,15 +1,19 @@
 <?php
-session_start(); // Start the session
+#---------------------------------------------
+#           CheckUserLoginStatus
+#           By: Sebastian Skubisz
+#---------------------------------------------
+session_start(); # Start the session
 
-// Check if the user is not logged in
+# Check if the user is not logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Redirect the user to the login page
+    # Redirect the user to the login page
     header("Location: /login_pg.php");
     exit;
 }
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-use PhpAmqpLib\Exception\AMQPException; // Add this line for handling AMQP exceptions
+use PhpAmqpLib\Exception\AMQPException; # Add this line for handling AMQP exceptions
 require_once __DIR__ . '/vendor/autoload.php';
 ?>
 
@@ -213,6 +217,11 @@ require_once __DIR__ . '/vendor/autoload.php';
     </thead>
     <tbody>
         <?php
+#---------------------------------------------
+#           PlayerData -> Backend
+#        Display PlayerData in a Table
+#           By: Sebastian Skubisz
+#---------------------------------------------
         function displayRow($data) {
             echo "<tr>";
             foreach ($data as $part) {
@@ -222,19 +231,19 @@ require_once __DIR__ . '/vendor/autoload.php';
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Process form submission
+            # Process form submission
             if (isset($_POST['selectedCountry'])) {
                 $selectedCountry = $_POST['selectedCountry'];
 
-                // RabbitMQ configurations for each country
-                $rabbitmq_host = '10.198.120.107'; // Update with your RabbitMQ server host
+                # RabbitMQ configurations for each country
+                $rabbitmq_host = '10.198.120.107'; # Update with your RabbitMQ server host
                 $rabbitmq_port = 5672;
                 $rabbitmq_user = 'it490';
                 $rabbitmq_password = 'it490';
                 $rabbitmq_queue_send = '';
                 $rabbitmq_queue_receive = '';
 
-                // Define the RabbitMQ queue names based on the selected country
+                # Define the RabbitMQ queue names based on the selected country
                 switch ($selectedCountry) {
                     case 'USA':
                         $rabbitmq_queue_send = 'playerData_FTOB_US';
@@ -252,7 +261,7 @@ require_once __DIR__ . '/vendor/autoload.php';
                         $messageToSend = "Requesting K PlayerData";
                         break;
                     default:
-                        // Handle other cases or errors
+                        # Handle other cases or errors
                         break;
                 }
 
@@ -261,7 +270,7 @@ require_once __DIR__ . '/vendor/autoload.php';
                     $connectionR = null;
 
                     try {
-                        // RabbitMQ operations for sending message
+                        # RabbitMQ operations for sending message
                         $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
                         $channelS = $connectionS->channel();
 
@@ -270,13 +279,13 @@ require_once __DIR__ . '/vendor/autoload.php';
 
                         $channelS->close();
 
-                        // RabbitMQ operations for receiving messages
+                        # RabbitMQ operations for receiving messages
                         $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
                         $channelR = $connectionR->channel();
 
                         $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
 
-                        // Handle the received messages
+                        # Handle the received messages
                         $decodedData = '';
                         $messagePartsCount = 19;
 
@@ -303,12 +312,12 @@ require_once __DIR__ . '/vendor/autoload.php';
                         $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
 
                         while (count($channelR->callbacks)) {
-                            $channelR->wait(null, false, 5); // Wait for incoming messages with a timeout
+                            $channelR->wait(null, false, 5); # Wait for incoming messages with a timeout
                         }
                     } catch (Exception $e) {
                         echo "An error occurred: " . $e->getMessage();
                     } finally {
-                        // Close the connections at the end
+                        # Close the connections at the end
                         if ($channelS !== null) {
                             $channelS->close();
                         }
@@ -330,18 +339,18 @@ require_once __DIR__ . '/vendor/autoload.php';
         ?>
     </tbody>
 </table>
-    <script>
-    // Add click event listener to country buttons
+    <?php
+    # Add click event listener to country buttons
     document.addEventListener('DOMContentLoaded', function() {
         const countryButtons = document.querySelectorAll('.country-button');
         countryButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const selectedCountry = this.getAttribute('data-country');
                 document.getElementById('selected-country').value = selectedCountry;
-                document.querySelector('form').submit(); // Submit the form
+                document.querySelector('form').submit(); # Submit the form
             });
         });
     });
-</script>
+?>
 </body>
 </html>
