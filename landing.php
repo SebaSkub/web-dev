@@ -183,15 +183,15 @@ function displayRow($data) {
     </nav>
     <h1>League of Legends Stats</h1>
     <div class="search-container">
-        <form method="post" action="/">
+         <form method="post" action="/">
             <input type="text" name="playerName" placeholder="Enter Player Name">
-            <button type="submit" name="search">Search</button>
             <label for="country-select">Select Country:</label>
-            <select id="country-select" onchange="changeCountry(this.value)">
+            <select id="country-select" name="selectedCountry">
                 <option value="USA">USA</option>
                 <option value="China">China</option>
                 <option value="Korea">Korea</option>
             </select>
+            <button type="submit">Search</button>
         </form>
         
     </div>
