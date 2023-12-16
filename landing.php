@@ -263,23 +263,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
 
-            $connection = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-            $channel = $connection->channel();
+            $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+            $channelS = $connectionS->channelS();
 
             // Publish a message to indicate the selected country
             $msg = new AMQPMessage($messageToSend);
-            $channel->basic_publish($msg, '', $rabbitmq_queue_send);
+            $channelS->basic_publish($msg, '', $rabbitmq_queue_send);
 
             // Close the channel and connection after sending the message
-            $channel->close();
-            $connection->close();
+            $channeSl->close();
+            $connectionS->close();
         }
         if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
 
-            $connection = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-            $channel = $connection->channel();
+            $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+            $channelR = $connectionR->channelR();
 
-            $channel->queue_declare($rabbitmq_queue_receive, false, true, false, false);
+            $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
 
                         // Display a message indicating waiting for data
                         echo 'Waiting for messages. To exit, press CTRL+C', "<br>";
@@ -315,18 +315,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     echo "Received incomplete or invalid data: ", $decodedData, "<br>";
                                 }
 
-                                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                                $msg->delivery_info['channelR']->basic_ack($msg->delivery_info['delivery_tag']);
                             }
                         };
 
-                        $channel->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
+                        $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
 
-                        while (count($channel->callbacks)) {
-                            $channel->wait();
+                        while (count($channelR->callbacks)) {
+                            $channelR->wait();
                         }
 
-                        $channel->close();
-                        $connection->close();
+                        $channelR->close();
+                        $connectionR->close();
                     }
                 }
             }
