@@ -176,6 +176,10 @@ $player_data = json_decode($scraped_data, true);
         .search-container button[type="submit"]:hover {
             transform: scale(1.05);
         }
+        .search-container button.active {
+            background-color: #3498db;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -190,11 +194,10 @@ $player_data = json_decode($scraped_data, true);
             <input type="text" name="playerName" placeholder="Enter Player Name">
             <button type="submit" name="search">Search</button>
             <button type="submit" name="scrape">Scrape</button>
-            <select name="tableSelect">
-            <option value="USA">USA</option>
-            <option value="China">China</option>
-            <option value="Korea">Korea</option>
-        </select>
+            <button class="active" onclick="changeTable('USA')">USA</button>
+            <button onclick="changeTable('China')">China</button>
+            <button onclick="changeTable('Korea')">Korea</button>
+        
         </form>
     </div>
     <table>
@@ -258,5 +261,23 @@ $player_data = json_decode($scraped_data, true);
             ?>
         </tbody>
     </table>
+    <script>
+        function changeTable(country) {
+            // Get all buttons and remove the 'active' class
+            const buttons = document.querySelectorAll('.btn-container button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Add 'active' class to the clicked button
+            const selectedButton = document.querySelector(`button:contains('${country}')`);
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
+
+            // You can perform other actions based on the selected country, like fetching data or changing the displayed table
+            // For now, this function only changes the active button's style
+        }
+    </script>
 </body>
 </html>
