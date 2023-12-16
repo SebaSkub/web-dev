@@ -1,7 +1,7 @@
 <?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-
+use PhpAmqpLib\Exception\AMQPException; // Add this line for handling AMQP exceptions
 require_once __DIR__ . '/vendor/autoload.php';
 ?>
 
@@ -326,6 +326,8 @@ require_once __DIR__ . '/vendor/autoload.php';
             }
         } else {
             echo "Invalid RabbitMQ queue or country selection";
+                        }
+                }
         }
             ?>
 
