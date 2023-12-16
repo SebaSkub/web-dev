@@ -198,7 +198,6 @@ function displayRow($data) {
         <thead>
             <tr>
                 <th>Player Name</th>
-                <th>Team</th>
                 <th>GP</th>
                 <th>W</th>
                 <th>L</th>
