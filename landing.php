@@ -159,9 +159,19 @@ function displayRow($data) {
         .search-container button[type="submit"]:hover {
             transform: scale(1.05);
         }
-        .search-container button.active {
-            background-color: #3498db;
-            color: #fff;
+
+        /* Style dropdown to match button */
+        .search-container select {
+            padding: 10px 20px;
+            border-radius: 25px;
+            background-color: #f1c40f;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .search-container select:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -176,13 +186,12 @@ function displayRow($data) {
         <form method="post" action="/">
             <input type="text" name="playerName" placeholder="Enter Player Name">
             <button type="submit" name="search">Search</button>
-            <button type="submit" name="scrape">Scrape</button>
             <label for="country-select">Select Country:</label>
-        <select id="country-select" onchange="changeCountry(this.value)">
-            <option value="USA">USA</option>
-            <option value="China">China</option>
-            <option value="Korea">Korea</option>
-        </select>
+            <select id="country-select" onchange="changeCountry(this.value)">
+                <option value="USA">USA</option>
+                <option value="China">China</option>
+                <option value="Korea">Korea</option>
+            </select>
         </form>
         
     </div>
