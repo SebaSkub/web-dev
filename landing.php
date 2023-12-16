@@ -20,7 +20,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 
 
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!-- 
+          Player Stats Page
+        By: Sebastian Skubisz
+-->
 <html>
 <head>
     <title>League of Legends Stats</title>
