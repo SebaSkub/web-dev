@@ -271,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $channelS->basic_publish($msg, '', $rabbitmq_queue_send);
 
             // Close the channel and connection after sending the message
-            $channeSl->close();
+            $channelS->close();
             $connectionS->close();
         }
         if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
