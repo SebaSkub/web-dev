@@ -222,7 +222,7 @@ function displayRow($data) {
             </tr>
         </thead>
         <tbody>
-            <?PHP
+            <?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
