@@ -5,21 +5,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 require_once __DIR__ . '/vendor/autoload.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- ... (head content remains unchanged) ... -->
-</head>
-<body>
-    <!-- ... (body content remains unchanged) ... -->
-    <tbody>
-        <?php
-        // ... (existing PHP code remains unchanged) ...
-        ?>
-    </tbody>
-    <!-- ... (script and closing body/html tags remain unchanged) ... -->
-</body>
-</html>
+
 
 
 <!DOCTYPE html>
