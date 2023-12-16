@@ -207,12 +207,58 @@ function displayRow($data) {
         </thead>
         <tbody>
             <?php
+function displayRow($data) {
+    echo "<tr>";
+    foreach ($data as $part) {
+        echo "<td>" . htmlspecialchars($part) . "</td>";
+    }
+    echo "</tr>";
+}
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 require_once __DIR__ . '/vendor/autoload.php';
 
- if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Process form submission
+    if (isset($_POST['selectedCountry'])) {
+        $selectedCountry = $_POST['selectedCountry'];
+
+        // RabbitMQ configurations for each country
+        $rabbitmq_host = '10.198.120.107'; // Update with your RabbitMQ server host
+        $rabbitmq_port = 5672;
+        $rabbitmq_user = 'it490';
+        $rabbitmq_password = 'it490';
+        $rabbitmq_queue_send = '';
+        $rabbitmq_queue_receive = '';
+
+        // Define the RabbitMQ queue names based on the selected country
+        switch ($selectedCountry) {
+            case 'USA':
+                $rabbitmq_queue_send = 'playerData_FTOB_US';
+                $rabbitmq_queue_receive = 'playerData_BTOF_US';
+                $messageToSend = "Requesting US PlayerData";
+                break;
+            case 'China':
+                $rabbitmq_queue_send = 'playerData_FTOB_C';
+                $rabbitmq_queue_receive = 'playerData_BTOF_C';
+                $messageToSend = "Requesting C PlayerData";
+                break;
+            case 'Korea':
+                $rabbitmq_queue_send = 'playerData_FTOB_K';
+                $rabbitmq_queue_receive = 'playerData_BTOF_K';
+                $messageToSend = "Requesting K PlayerData";
+                break;
+            default:
+                // Handle other cases or errors
+                break;
+        }
+
+        if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
             try {
+                use PhpAmqpLib\Connection\AMQPStreamConnection;
+                use PhpAmqpLib\Message\AMQPMessage;
+                require_once __DIR__ . '/vendor/autoload.php';
+
                 $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
                 $channelS = $connectionS->channel();
 
@@ -267,7 +313,7 @@ require_once __DIR__ . '/vendor/autoload.php';
         }
     }
 }
-    ?>
+?>
         </tbody>
     </table>
     <script>
