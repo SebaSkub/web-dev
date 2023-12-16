@@ -254,6 +254,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             // Handle other cases or errors
                             break;
                     }
+                    use PhpAmqpLib\Connection\AMQPStreamConnection;
+                    use PhpAmqpLib\Message\AMQPMessage;
 
                     if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
 
