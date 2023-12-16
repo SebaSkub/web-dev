@@ -242,19 +242,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Define the RabbitMQ queue names based on the selected country
             switch ($selectedCountry) {
             case 'USA':
-                $rabbitmq_queue_send = 'playerData_BTOF_US';
+                $rabbitmq_queue_send = 'playerData_FTOB_US';
                 $rabbitmq_queue_receive = 'playerData_BTOF_US';
-                $messageToSend = "Player Data Inserted For Region US -- Database";
+                $messageToSend = "Requesting US PlayerData";
                 break;
             case 'China':
-                $rabbitmq_queue_send = 'playerData_BTOF_C';
+                $rabbitmq_queue_send = 'playerData_FTOB_C';
                 $rabbitmq_queue_receive = 'playerData_BTOF_C';
-                $messageToSend = "Player Data Inserted For Region C -- Database";
+                $messageToSend = "Requesting C PlayerData";
                 break;
             case 'Korea':
-                $rabbitmq_queue_send = 'playerData_BTOF_K';
+                $rabbitmq_queue_send = 'playerData_FTOB_K';
                 $rabbitmq_queue_receive = 'playerData_BTOF_K';
-                $messageToSend = "Player Data Inserted For Region K -- Database";
+                $messageToSend = "Requesting K PlayerData";
                 break;
             default:
                 // Handle other cases or errors
