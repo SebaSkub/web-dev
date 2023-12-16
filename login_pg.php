@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!-- 
+             Login page
+        By: Sebastian Skubisz
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
