@@ -104,9 +104,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
     <div class="background"></div> <!-- Background container -->
-
+     <!-- Navbar to Navigate to the Player Stats Page -->
     <nav>
-        <a href="/landing.php">Player Stats</a>
+        <a href="/landing.php">Player Stats</a> 
         <a href="/logout.php">Logout</a>
     </nav>
 
