@@ -197,26 +197,19 @@ function displayRow($data) {
     <table>
         <thead>
             <tr>
-                <th>Player Name</th>
-                <th>GP</th>
-                <th>W</th>
-                <th>L</th>
-                <th>W/L</th>
-                <th>K</th>
-                <th>D</th>
-                <th>A</th>
-                <th>KDA</th>
-                <th>CS</th>
-                <th>CS/M</th>
-                <th>G</th>
-                <th>G/M</th>
-                <th>Damage</th>
-                <th>Damage/M</th>
-                <th>Kill Participation</th>
-                <th>Kill Share</th>
-                <th>Gold Share</th>
-                <th>Champions Played</th>
-                <!-- Add other headers as required -->
+                <?php
+                // Define the headers statically based on your data model
+                $headers = [
+                    'Player Name', 'GP', 'W', 'L', 'W/L', 'K', 'D', 'A', 'KDA', 'CS', 
+                    'CS/M', 'G', 'G/M', 'Damage', 'Damage/M', 'Kill Participation', 
+                    'Kill Share', 'Gold Share', 'Champions Played'
+                ];
+
+                // Display the table headers
+                foreach ($headers as $header) {
+                    echo "<th>" . htmlspecialchars($header) . "</th>";
+                }
+                ?>
             </tr>
         </thead>
         <tbody>
@@ -273,65 +266,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $channelS->close();
             $connectionS->close();
         }
-        if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
-            ob_start();
+        if ($rabbitmq_queue_receive !== '') {
+        $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+        $channelR = $connectionR->channel();
 
-            $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-            $channelR = $connectionR->channel();
+        $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
 
-            $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
+        $decodedData = '';
 
-                        // Display a message indicating waiting for data
-                        echo 'Waiting for messages. To exit, press CTRL+C', "<br>";
+        $callback = function ($msg) use (&$decodedData) {
+            $decoded_message = utf8_decode($msg->body);
 
-                        $headersDisplayed = false;
+            if (strpos($decoded_message, ',') !== false) {
+                $decodedData .= $decoded_message;
+            } else {
+                $decodedData .= $decoded_message;
+                $message_parts = explode(',', $decodedData);
 
-                        $decodedData = '';
-
-                        $callback = function ($msg) use (&$decodedData, &$headersDisplayed) {
-                            $decoded_message = utf8_decode($msg->body);
-
-                            if (strpos($decoded_message, ',') !== false) {
-                                $decodedData .= $decoded_message;
-                            } else {
-                                $decodedData .= $decoded_message;
-                                $message_parts = explode(',', $decodedData);
-
-                                if (count($message_parts) === 19) {
-                                    if (!$headersDisplayed) {
-                                        // Display table headers
-                                        echo "<tr>";
-                                        foreach ($message_parts as $header) {
-                                            echo "<th>" . htmlspecialchars($header) . "</th>";
-                                        }
-                                        echo "</tr>";
-                                        $headersDisplayed = true;
-                                    } else {
-                                        // Display data rows
-                                        displayRow($message_parts);
-                                    }
-                                    $decodedData = '';
-                                } else {
-                                    echo "Received incomplete or invalid data: ", $decodedData, "<br>";
-                                }
-
-                                $msg->delivery_info['channelR']->basic_ack($msg->delivery_info['delivery_tag']);
-                            }
-                        };
-
-                        $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
-
-                        while (count($channelR->callbacks)) {
-                            $channelR->wait();
-                        }
-
-                        $channelR->close();
-                        $connectionR->close();
-                    }
-                    ob_end_flush(); // Add this line to flush the output buffer
+                if (count($message_parts) === 19) {
+                    displayRow($message_parts); // Display a row for each set of data
+                    $decodedData = '';
+                } else {
+                    echo "Received incomplete or invalid data: ", $decodedData, "<br>";
                 }
+
+                $msg->delivery_info['channelR']->basic_ack($msg->delivery_info['delivery_tag']);
             }
-            ?>
+        };
+
+        $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
+
+        while (count($channelR->callbacks)) {
+            $channelR->wait();
+        }
+
+        $channelR->close();
+        $connectionR->close();
+    } else {
+        echo "Invalid RabbitMQ queue or country selection";
+    }
+    ?>
         </tbody>
     </table>
     <script>
