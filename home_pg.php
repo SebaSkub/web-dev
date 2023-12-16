@@ -12,7 +12,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 ?>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!-- 
+              Home page
+        By: Sebastian Skubisz
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
