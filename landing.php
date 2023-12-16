@@ -225,6 +225,8 @@ function displayRow($data) {
             <?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+require_once __DIR__ . '/vendor/autoload.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Process form submission
     if (isset($_POST['selectedCountry'])) {
