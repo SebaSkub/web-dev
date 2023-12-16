@@ -264,7 +264,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
 
             $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-            $channelS = $connectionS->channelS();
+            $channelS = $connectionS->channel();
 
             // Publish a message to indicate the selected country
             $msg = new AMQPMessage($messageToSend);
@@ -277,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
 
             $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-            $channelR = $connectionR->channelR();
+            $channelR = $connectionR->channel();
 
             $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
 
