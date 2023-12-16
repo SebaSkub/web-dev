@@ -183,7 +183,7 @@ function displayRow($data) {
     </nav>
     <h1>League of Legends Stats</h1>
     <div class="search-container">
-         <form method="post" action="/">
+         <form method="post" action="/landing.php">
             <input type="text" name="playerName" placeholder="Enter Player Name">
             <label for="country-select">Select Country:</label>
             <select id="country-select" name="selectedCountry">
