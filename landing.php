@@ -183,18 +183,17 @@ function displayRow($data) {
     </nav>
     <h1>League of Legends Stats</h1>
     <div class="search-container">
-         <form method="post" action="/landing.php">
-            <input type="text" name="playerName" placeholder="Enter Player Name">
-            <label for="country-select">Select Country:</label>
-            <select id="country-select" name="selectedCountry">
-                <option value="USA">USA</option>
-                <option value="China">China</option>
-                <option value="Korea">Korea</option>
-            </select>
-            <button type="submit">Search</button>
-        </form>
-        
-    </div>
+    <form method="post" action="/landing.php">
+        <input type="text" name="playerName" placeholder="Enter Player Name">
+        <div class="country-buttons">
+            <button type="button" class="country-button" data-country="USA">USA</button>
+            <button type="button" class="country-button" data-country="China">China</button>
+            <button type="button" class="country-button" data-country="Korea">Korea</button>
+        </div>
+        <input type="hidden" id="selected-country" name="selectedCountry"> <!-- Hidden input field for selected country -->
+        <button type="submit" style="display: none;"></button> <!-- Hidden submit button -->
+    </form>
+</div>
     <table>
         <thead>
             <tr>
@@ -241,31 +240,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $rabbitmq_queue_receive = '';
 
                     // Define the RabbitMQ queue names based on the selected country
-                    switch ($selectedCountry) {
-                        case 'USA':
-                            $rabbitmq_queue_send = 'playerData_BTOF_US';
-                            $rabbitmq_queue_receive = 'playerData_BTOF_US';
-                            break;
-                        case 'China':
-                            $rabbitmq_queue_send = 'playerData_BTOF_C';
-                            $rabbitmq_queue_receive = 'playerData_BTOF_C';
-                            break;
-                        case 'Korea':
-                            $rabbitmq_queue_send = 'playerData_BTOF_K';
-                            $rabbitmq_queue_receive = 'playerData_BTOF_K';
-                            break;
-                        default:
-                            // Handle other cases or errors
-                            break;
-                    }
-                    
+            switch ($selectedCountry) {
+            case 'USA':
+                $rabbitmq_queue_send = 'playerData_BTOF_US';
+                $rabbitmq_queue_receive = 'playerData_BTOF_US';
+                $messageToSend = "Player Data Inserted For Region US -- Database";
+                break;
+            case 'China':
+                $rabbitmq_queue_send = 'playerData_BTOF_C';
+                $rabbitmq_queue_receive = 'playerData_BTOF_C';
+                $messageToSend = "Player Data Inserted For Region C -- Database";
+                break;
+            case 'Korea':
+                $rabbitmq_queue_send = 'playerData_BTOF_K';
+                $rabbitmq_queue_receive = 'playerData_BTOF_K';
+                $messageToSend = "Player Data Inserted For Region K -- Database";
+                break;
+            default:
+                // Handle other cases or errors
+                break;
+        }
 
-                    if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
+        if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
 
-                        $connection = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-                        $channel = $connection->channel();
+            $connection = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+            $channel = $connection->channel();
 
-                        $channel->queue_declare($rabbitmq_queue_receive, false, true, false, false);
+            // Publish a message to indicate the selected country
+            $msg = new AMQPMessage($messageToSend);
+            $channel->basic_publish($msg, '', $rabbitmq_queue_send);
+
+            // Close the channel and connection after sending the message
+            $channel->close();
+            $connection->close();
+        }
+        if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
+
+            $connection = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+            $channel = $connection->channel();
+
+            $channel->queue_declare($rabbitmq_queue_receive, false, true, false, false);
 
                         // Display a message indicating waiting for data
                         echo 'Waiting for messages. To exit, press CTRL+C', "<br>";
@@ -319,5 +333,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ?>
         </tbody>
     </table>
+    <script>
+    // Add click event listener to country buttons
+    document.addEventListener('DOMContentLoaded', function() {
+        const countryButtons = document.querySelectorAll('.country-button');
+        countryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const selectedCountry = this.getAttribute('data-country');
+                document.getElementById('selected-country').value = selectedCountry;
+                document.querySelector('form').submit(); // Submit the form
+            });
+        });
+    });
+</script>
 </body>
 </html>
