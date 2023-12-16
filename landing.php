@@ -1,14 +1,4 @@
-<?php
 
-
-function displayRow($data) {
-    echo "<tr>";
-    foreach ($data as $part) {
-        echo "<td>" . htmlspecialchars($part) . "</td>";
-    }
-    echo "</tr>";
-}
-?>
 
 <!DOCTYPE html>
 <html>
