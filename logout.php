@@ -1,6 +1,6 @@
 <?php
 #---------------------------------------------
-#                 UserLogout
+#                 UserLogout 
 #           By: Sebastian Skubisz
 #---------------------------------------------
 session_start(); # Start the session
