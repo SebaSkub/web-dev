@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!-- 
+       Change Password Webpage
+        By: Sebastian Skubisz
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
