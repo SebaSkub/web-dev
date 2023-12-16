@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    echo 'alert("Credentials Not Correct. Please try again.");';
                    echo 'setTimeout(function() { window.location.href = "/login_pg.php"; }, 2000);';
                    echo '</script>';
-
+        }
         // Acknowledge the message received
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     };
