@@ -344,7 +344,7 @@ require_once __DIR__ . '/vendor/autoload.php';
     </tbody>
 </table>
     <script>
-    # Add click event listener to country buttons
+    //Add click event listener to country buttons
     document.addEventListener('DOMContentLoaded', function() {
         const countryButtons = document.querySelectorAll('.country-button');
         countryButtons.forEach(button => {
