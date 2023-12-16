@@ -1,4 +1,8 @@
 <?php
+#---------------------------------------------
+#           CheckUserLoginStatus
+#           By: Sebastian Skubisz
+#---------------------------------------------
 session_start(); // Start the session
 
 // Check if the user is not logged in
