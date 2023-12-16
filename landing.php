@@ -186,153 +186,142 @@ require_once __DIR__ . '/vendor/autoload.php';
     </form>
 </div>
     <table>
-        <thead>
-            <tr>
-                <?php
-                // Define the headers statically based on your data model
-                $headers = [
-                    'Player Name', 'GP', 'W', 'L', 'W/L', 'K', 'D', 'A', 'KDA', 'CS', 
-                    'CS/M', 'G', 'G/M', 'Damage', 'Damage/M', 'Kill Participation', 
-                    'Kill Share', 'Gold Share', 'Champions Played'
-                ];
-
-                // Display the table headers
-                foreach ($headers as $header) {
-                    echo "<th>" . htmlspecialchars($header) . "</th>";
-                }
-                ?>
-            </tr>
-        </thead>
-        <tbody>
+    <thead>
+        <tr>
             <?php
-            function displayRow($data) {
-                echo "<tr>";
-                foreach ($data as $part) {
-                    echo "<td>" . htmlspecialchars($part) . "</td>";
-                }
-                echo "</tr>";
+            // Define the headers statically based on your data model
+            $headers = [
+                'Player Name', 'GP', 'W', 'L', 'W/L', 'K', 'D', 'A', 'KDA', 'CS', 
+                'CS/M', 'G', 'G/M', 'Damage', 'Damage/M', 'Kill Participation', 
+                'Kill Share', 'Gold Share', 'Champions Played'
+            ];
+
+            // Display the table headers
+            foreach ($headers as $header) {
+                echo "<th>" . htmlspecialchars($header) . "</th>";
             }
+            ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        function displayRow($data) {
+            echo "<tr>";
+            foreach ($data as $part) {
+                echo "<td>" . htmlspecialchars($part) . "</td>";
+            }
+            echo "</tr>";
+        }
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Process form submission
-                if (isset($_POST['selectedCountry'])) {
-                    $selectedCountry = $_POST['selectedCountry'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Process form submission
+            if (isset($_POST['selectedCountry'])) {
+                $selectedCountry = $_POST['selectedCountry'];
 
-                    // RabbitMQ configurations for each country
-                    $rabbitmq_host = '10.198.120.107'; // Update with your RabbitMQ server host
-                    $rabbitmq_port = 5672;
-                    $rabbitmq_user = 'it490';
-                    $rabbitmq_password = 'it490';
-                    $rabbitmq_queue_send = '';
-                    $rabbitmq_queue_receive = '';
+                // RabbitMQ configurations for each country
+                $rabbitmq_host = '10.198.120.107'; // Update with your RabbitMQ server host
+                $rabbitmq_port = 5672;
+                $rabbitmq_user = 'it490';
+                $rabbitmq_password = 'it490';
+                $rabbitmq_queue_send = '';
+                $rabbitmq_queue_receive = '';
 
-                    // Define the RabbitMQ queue names based on the selected country
-                    switch ($selectedCountry) {
-                        case 'USA':
-                            $rabbitmq_queue_send = 'playerData_FTOB_US';
-                            $rabbitmq_queue_receive = 'playerData_BTOF_US';
-                            $messageToSend = "Requesting US PlayerData";
-                            break;
-                        case 'China':
-                            $rabbitmq_queue_send = 'playerData_FTOB_C';
-                            $rabbitmq_queue_receive = 'playerData_BTOF_C';
-                            $messageToSend = "Requesting C PlayerData";
-                            break;
-                        case 'Korea':
-                            $rabbitmq_queue_send = 'playerData_FTOB_K';
-                            $rabbitmq_queue_receive = 'playerData_BTOF_K';
-                            $messageToSend = "Requesting K PlayerData";
-                            break;
-                        default:
-                            // Handle other cases or errors
-                            break;
-                    }
+                // Define the RabbitMQ queue names based on the selected country
+                switch ($selectedCountry) {
+                    case 'USA':
+                        $rabbitmq_queue_send = 'playerData_FTOB_US';
+                        $rabbitmq_queue_receive = 'playerData_BTOF_US';
+                        $messageToSend = "Requesting US PlayerData";
+                        break;
+                    case 'China':
+                        $rabbitmq_queue_send = 'playerData_FTOB_C';
+                        $rabbitmq_queue_receive = 'playerData_BTOF_C';
+                        $messageToSend = "Requesting C PlayerData";
+                        break;
+                    case 'Korea':
+                        $rabbitmq_queue_send = 'playerData_FTOB_K';
+                        $rabbitmq_queue_receive = 'playerData_BTOF_K';
+                        $messageToSend = "Requesting K PlayerData";
+                        break;
+                    default:
+                        // Handle other cases or errors
+                        break;
+                }
 
-        if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
-            $connectionS = null;
-            $connectionR = null;
+                if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
+                    $connectionS = null;
+                    $connectionR = null;
 
-            try {
-                $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-                $channelS = $connectionS->channel();
-
-                $msg = new AMQPMessage($messageToSend);
-                $channelS->basic_publish($msg, '', $rabbitmq_queue_send);
-
-                $channelS->close();
-
-                $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-                $channelR = $connectionR->channel();
-
-                $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
-
-                // Handle the received messages
-                $decodedData = '';
-                $messagePartsCount = 19;
-
-                $callback = function ($msg) use (&$decodedData, $messagePartsCount) {
-                    $decoded_message = utf8_decode($msg->body);
-
-                    if (strpos($decoded_message, ',') !== false) {
-                        $decodedData .= $decoded_message;
-                    } else {
-                        $decodedData .= $decoded_message;
-                        $message_parts = explode(',', $decodedData);
-
-                        if (count($message_parts) === $messagePartsCount) {
-                            displayRow($message_parts);
-                            $decodedData = '';
-                        } else {
-                            echo "Received incomplete or invalid data: ", $decodedData, "<br>";
-                        }
-
-                        $msg->delivery_info['channelR']->basic_ack($msg->delivery_info['delivery_tag']);
-                    }
-                };
-
-                $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
-
-                while (count($channelR->callbacks)) {
                     try {
-                        $channelR->wait(null, false, 5); // Wait for incoming messages with a timeout
-                    } catch (PhpAmqpLib\Exception\AMQPIOException $e) {
-                        // Handle the exception (e.g., log it)
-                        // Close and reconnect the channel and connection
-                        if ($connectionR !== null) {
-                            $channelR->close();
-                            $connectionR->close();
-                        }
+                        // RabbitMQ operations for sending message
+                        $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+                        $channelS = $connectionS->channel();
+
+                        $msg = new AMQPMessage($messageToSend);
+                        $channelS->basic_publish($msg, '', $rabbitmq_queue_send);
+
+                        $channelS->close();
+
+                        // RabbitMQ operations for receiving messages
                         $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
                         $channelR = $connectionR->channel();
+
                         $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
+
+                        // Handle the received messages
+                        $decodedData = '';
+                        $messagePartsCount = 19;
+
+                        $callback = function ($msg) use (&$decodedData, $messagePartsCount) {
+                            $decoded_message = utf8_decode($msg->body);
+
+                            if (strpos($decoded_message, ',') !== false) {
+                                $decodedData .= $decoded_message;
+                            } else {
+                                $decodedData .= $decoded_message;
+                                $message_parts = explode(',', $decodedData);
+
+                                if (count($message_parts) === $messagePartsCount) {
+                                    displayRow($message_parts);
+                                    $decodedData = '';
+                                } else {
+                                    echo "Received incomplete or invalid data: ", $decodedData, "<br>";
+                                }
+
+                                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                            }
+                        };
+
+                        $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
+
+                        while (count($channelR->callbacks)) {
+                            $channelR->wait(null, false, 5); // Wait for incoming messages with a timeout
+                        }
+                    } catch (Exception $e) {
+                        echo "An error occurred: " . $e->getMessage();
+                    } finally {
+                        // Close the connections at the end
+                        if ($channelS !== null) {
+                            $channelS->close();
+                        }
+                        if ($connectionS !== null) {
+                            $connectionS->close();
+                        }
+                        if ($channelR !== null) {
+                            $channelR->close();
+                        }
+                        if ($connectionR !== null) {
+                            $connectionR->close();
+                        }
                     }
-                }
-            } catch (Exception $e) {
-                echo "An error occurred: " . $e->getMessage();
-            } finally {
-                // Close the connections at the end
-                if ($channelS !== null) {
-                    $channelS->close();
-                }
-                if ($connectionS !== null) {
-                    $connectionS->close();
-                }
-                if ($channelR !== null) {
-                    $channelR->close();
-                }
-                if ($connectionR !== null) {
-                    $connectionR->close();
+                } else {
+                    echo "Invalid RabbitMQ queue or country selection";
                 }
             }
-        } else {
-            echo "Invalid RabbitMQ queue or country selection";
-                        }
-                }
         }
-            ?>
-
-        </tbody>
-    </table>
+        ?>
+    </tbody>
+</table>
     <script>
     // Add click event listener to country buttons
     document.addEventListener('DOMContentLoaded', function() {
