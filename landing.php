@@ -274,6 +274,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $connectionS->close();
         }
         if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
+            ob_start();
 
             $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
             $channelR = $connectionR->channel();
@@ -327,6 +328,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $channelR->close();
                         $connectionR->close();
                     }
+                    ob_end_flush(); // Add this line to flush the output buffer
                 }
             }
             ?>
