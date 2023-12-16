@@ -222,7 +222,9 @@ function displayRow($data) {
             </tr>
         </thead>
         <tbody>
-            <?php
+            <?PHP
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Process form submission
     if (isset($_POST['selectedCountry'])) {
@@ -254,8 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             // Handle other cases or errors
                             break;
                     }
-                    use PhpAmqpLib\Connection\AMQPStreamConnection;
-                    use PhpAmqpLib\Message\AMQPMessage;
+                    
 
                     if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
 
