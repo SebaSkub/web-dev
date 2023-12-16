@@ -275,12 +275,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $decodedData .= $decoded_message;
                     $message_parts = explode(',', $decodedData);
 
-                    if (count($message_parts) === 19) {
-                        displayRow($message_parts); // Display a row for each set of data
-                        $decodedData = '';
-                    } else {
-                        echo "Received incomplete or invalid data: ", $decodedData, "<br>";
-                    }
+                 if (count($message_parts) === 19) {
+    echo "<pre>";
+    print_r($message_parts); // Display received data for debugging
+    echo "</pre>";
+    displayRow($message_parts); // Display a row for each set of data
+    $decodedData = '';
+} else {
+    echo "Received incomplete or invalid data: ", $decodedData, "<br>";
+}
 
                     $msg->delivery_info['channelR']->basic_ack($msg->delivery_info['delivery_tag']);
                 }
