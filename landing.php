@@ -191,14 +191,13 @@ require_once __DIR__ . '/vendor/autoload.php';
     <h1>League of Legends Stats</h1>
     <div class="search-container">
     <form method="post" action="/landing.php">
-        <input type="text" name="playerName" placeholder="Enter Player Name">
-        <div class="country-buttons">
-            <button type="button" class="country-button" data-country="USA">USA</button>
-            <button type="button" class="country-button" data-country="China">China</button>
-            <button type="button" class="country-button" data-country="Korea">Korea</button>
-        </div>
-        <input type="hidden" id="selected-country" name="selectedCountry"> <!-- Hidden input field for selected country -->
-        <button type="submit" style="display: none;"></button> <!-- Hidden submit button -->
+    <select name="selectedCountry">
+        <option value="USA">USA</option>
+        <option value="China">China</option>
+        <option value="Korea">Korea</option>
+    </select>
+    <input type="submit" name="submit" value="Submit">
+</form>
     </form>
 </div>
     <table>
@@ -234,112 +233,89 @@ require_once __DIR__ . '/vendor/autoload.php';
             echo "</tr>";
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            # Process form submission
-            if (isset($_POST['selectedCountry'])) {
-                $selectedCountry = $_POST['selectedCountry'];
+      # Check if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selectedCountry'])) {
+    $selectedCountry = $_POST['selectedCountry'];
 
-                # RabbitMQ configurations for each country
-                $rabbitmq_host = '10.198.120.107'; # Update with your RabbitMQ server host
-                $rabbitmq_port = 5672;
-                $rabbitmq_user = 'it490';
-                $rabbitmq_password = 'it490';
-                $rabbitmq_queue_send = '';
-                $rabbitmq_queue_receive = '';
+    # RabbitMQ configurations
+    $rabbitmq_host = '10.198.120.107'; // Replace with your RabbitMQ server host
+    $rabbitmq_port = 5672;
+    $rabbitmq_user = 'it490';
+    $rabbitmq_password = 'it490';
+    $rabbitmq_queue_send = '';
+    $rabbitmq_queue_receive = '';
 
-                # Define the RabbitMQ queue names based on the selected country
-                switch ($selectedCountry) {
-                    case 'USA':
-                        $rabbitmq_queue_send = 'playerData_FTOB_US';
-                        $rabbitmq_queue_receive = 'playerData_BTOF_US';
-                        $messageToSend = "Requesting US PlayerData";
-                        break;
-                    case 'China':
-                        $rabbitmq_queue_send = 'playerData_FTOB_C';
-                        $rabbitmq_queue_receive = 'playerData_BTOF_C';
-                        $messageToSend = "Requesting C PlayerData";
-                        break;
-                    case 'Korea':
-                        $rabbitmq_queue_send = 'playerData_FTOB_K';
-                        $rabbitmq_queue_receive = 'playerData_BTOF_K';
-                        $messageToSend = "Requesting K PlayerData";
-                        break;
-                    default:
-                        # Handle other cases or errors
-                        break;
-                }
+    # Define the RabbitMQ queue names based on the selected country
+    switch ($selectedCountry) {
+        case 'USA':
+            $rabbitmq_queue_send = 'playerData_FTOB_US';
+            $rabbitmq_queue_receive = 'playerData_BTOF_US';
+            $messageToSend = "Requesting US PlayerData";
+            break;
+        case 'China':
+            $rabbitmq_queue_send = 'playerData_FTOB_C';
+            $rabbitmq_queue_receive = 'playerData_BTOF_C';
+            $messageToSend = "Requesting C PlayerData";
+            break;
+        case 'Korea':
+            $rabbitmq_queue_send = 'playerData_FTOB_K';
+            $rabbitmq_queue_receive = 'playerData_BTOF_K';
+            $messageToSend = "Requesting K PlayerData";
+            break;
+        default:
+            // Handle other cases or errors
+            break;
+    }
 
-                if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
-                    $connectionS = null;
-                    $connectionR = null;
+    if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
+        $connectionS = new PhpAmqpLib\Connection\AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+        $channelS = $connectionS->channel();
 
-                    try {
-                        # RabbitMQ operations for sending message
-                        $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-                        $channelS = $connectionS->channel();
+        $msg = new PhpAmqpLib\Message\AMQPMessage($messageToSend);
+        $channelS->basic_publish($msg, '', $rabbitmq_queue_send);
 
-                        $msg = new AMQPMessage($messageToSend);
-                        $channelS->basic_publish($msg, '', $rabbitmq_queue_send);
+        $channelS->close();
 
-                        $channelS->close();
+        $connectionR = new PhpAmqpLib\Connection\AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+        $channelR = $connectionR->channel();
 
-                        # RabbitMQ operations for receiving messages
-                        $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-                        $channelR = $connectionR->channel();
+        $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
 
-                        $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
+        $decodedData = '';
+        $messagePartsCount = 19;
 
-                        # Handle the received messages
-                        $decodedData = '';
-                        $messagePartsCount = 19;
+        $callback = function ($msg) use (&$decodedData, $messagePartsCount) {
+            $decoded_message = utf8_decode($msg->body);
 
-                        $callback = function ($msg) use (&$decodedData, $messagePartsCount) {
-                            $decoded_message = utf8_decode($msg->body);
+            if (strpos($decoded_message, ',') !== false) {
+                $decodedData .= $decoded_message;
+            } else {
+                $decodedData .= $decoded_message;
+                $message_parts = explode(',', $decodedData);
 
-                            if (strpos($decoded_message, ',') !== false) {
-                                $decodedData .= $decoded_message;
-                            } else {
-                                $decodedData .= $decoded_message;
-                                $message_parts = explode(',', $decodedData);
-
-                                if (count($message_parts) === $messagePartsCount) {
-                                    displayRow($message_parts);
-                                    $decodedData = '';
-                                } else {
-                                    echo "Received incomplete or invalid data: ", $decodedData, "<br>";
-                                }
-
-                                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-                            }
-                        };
-
-                        $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
-
-                        while (count($channelR->callbacks)) {
-                            $channelR->wait(null, false, 5); # Wait for incoming messages with a timeout
-                        }
-                    } catch (Exception $e) {
-                        echo "An error occurred: " . $e->getMessage();
-                    } finally {
-                        # Close the connections at the end
-                        if ($channelS !== null) {
-                            $channelS->close();
-                        }
-                        if ($connectionS !== null) {
-                            $connectionS->close();
-                        }
-                        if ($channelR !== null) {
-                            $channelR->close();
-                        }
-                        if ($connectionR !== null) {
-                            $connectionR->close();
-                        }
-                    }
+                if (count($message_parts) === $messagePartsCount) {
+                    displayRow($message_parts);
+                    $decodedData = '';
                 } else {
-                    echo "Invalid RabbitMQ queue or country selection";
+                    echo "Received incomplete or invalid data: ", $decodedData, "<br>";
                 }
+
+                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
             }
+        };
+
+        $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
+
+        while (count($channelR->callbacks)) {
+            $channelR->wait(null, false, 5); // Wait for incoming messages with a timeout
         }
+
+        $channelR->close();
+        $connectionR->close();
+    } else {
+        echo "Invalid RabbitMQ queue or country selection";
+    }
+}
         ?>
     </tbody>
 </table>
