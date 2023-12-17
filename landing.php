@@ -316,21 +316,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selectedCountry'])) {
         echo "Invalid RabbitMQ queue or country selection";
     }
 }
-        ?>
+?>
     </tbody>
 </table>
-    <script>
-    //Add click event listener to country buttons
-    document.addEventListener('DOMContentLoaded', function() {
-        const countryButtons = document.querySelectorAll('.country-button');
-        countryButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const selectedCountry = this.getAttribute('data-country');
-                document.getElementById('selected-country').value = selectedCountry;
-                document.querySelector('form').submit(); # Submit the form
-            });
-        });
-    });
-</script>
+   
 </body>
 </html>
