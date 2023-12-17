@@ -14,6 +14,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPException; # Add this line for handling AMQP exceptions
+
 require_once __DIR__ . '/vendor/autoload.php';
 ?>
 
@@ -26,10 +27,11 @@ require_once __DIR__ . '/vendor/autoload.php';
         By: Sebastian Skubisz
 -->
 <html>
+
 <head>
     <title>League of Legends Stats</title>
     <img src='logo.png' alt='Logo Image'>
-   <style>
+    <style>
         /* Your CSS styling here */
         body {
             font-family: 'Arial', sans-serif;
@@ -45,7 +47,8 @@ require_once __DIR__ . '/vendor/autoload.php';
         img {
             margin-top: 60px;
             margin-bottom: 20px;
-            max-width: 50%; /* Ensures the logo doesn't exceed its container */
+            max-width: 50%;
+            /* Ensures the logo doesn't exceed its container */
         }
 
         nav {
@@ -80,11 +83,13 @@ require_once __DIR__ . '/vendor/autoload.php';
 
         h1 {
             text-align: center;
-            margin-top: 20px; /* Adjusted margin top to create space below the navbar */
+            margin-top: 20px;
+            /* Adjusted margin top to create space below the navbar */
         }
 
         table {
-            width: 95%; /* Adjusted width to avoid overflowing */
+            width: 95%;
+            /* Adjusted width to avoid overflowing */
             max-width: 1200px;
             border-collapse: collapse;
             margin-top: 20px;
@@ -177,11 +182,13 @@ require_once __DIR__ . '/vendor/autoload.php';
             cursor: pointer;
             transition: transform 0.3s ease;
         }
+
         .search-container select:hover {
             transform: scale(1.05);
         }
     </style>
 </head>
+
 <body>
     <nav>
         <a href="/home_pg.php">Home</a>
@@ -190,135 +197,162 @@ require_once __DIR__ . '/vendor/autoload.php';
     </nav>
     <h1>League of Legends Stats</h1>
     <div class="search-container">
-    <form method="post" action="/landing.php">
-    <select name="selectedCountry">
-        <option value="USA">USA</option>
-        <option value="China">China</option>
-        <option value="Korea">Korea</option>
-    </select>
-    <input type="submit" name="submit" value="Submit">
-</form>
-    </form>
-</div>
+        <form method="post" action="/landing.php">
+            <input type="text" name="playerName" placeholder="Enter Player Name">
+            <div class="country-buttons">
+                <button type="button" class="country-button" data-country="USA">USA</button>
+                <button type="button" class="country-button" data-country="China">China</button>
+                <button type="button" class="country-button" data-country="Korea">Korea</button>
+            </div>
+            <input type="hidden" id="selected-country" name="selectedCountry">
+            <!-- Hidden input field for selected country -->
+            <button type="submit" style="display: none;"></button> <!-- Hidden submit button -->
+        </form>
+    </div>
     <table>
-    <thead>
-        <tr>
-            <?php
-            // Define the headers statically based on your data model
-            $headers = [
-                'Player Name', 'GP', 'W', 'L', 'W/L', 'K', 'D', 'A', 'KDA', 'CS', 
-                'CS/M', 'G', 'G/M', 'Damage', 'Damage/M', 'Kill Participation', 
-                'Kill Share', 'Gold Share', 'Champions Played'
-            ];
+        <thead>
+            <tr>
+                <?php
+                // Define the headers statically based on your data model
+                $headers = [
+                    'Player Name', 'GP', 'W', 'L', 'W/L', 'K', 'D', 'A', 'KDA', 'CS',
+                    'CS/M', 'G', 'G/M', 'Damage', 'Damage/M', 'Kill Participation',
+                    'Kill Share', 'Gold Share', 'Champions Played'
+                ];
 
-            // Display the table headers
-            foreach ($headers as $header) {
-                echo "<th>" . htmlspecialchars($header) . "</th>";
-            }
-            ?>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-#---------------------------------------------
+                // Display the table headers
+                foreach ($headers as $header) {
+                    echo "<th>" . htmlspecialchars($header) . "</th>";
+                }
+                ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            #---------------------------------------------
 #           PlayerData -> Backend
 #        Display PlayerData in a Table
 #           By: Sebastian Skubisz
 #---------------------------------------------
-        function displayRow($data) {
-            echo "<tr>";
-            foreach ($data as $part) {
-                echo "<td>" . htmlspecialchars($part) . "</td>";
-            }
-            echo "</tr>";
-        }
-
-      # Check if form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selectedCountry'])) {
-    $selectedCountry = $_POST['selectedCountry'];
-
-    # RabbitMQ configurations
-    $rabbitmq_host = '10.198.120.107'; // Replace with your RabbitMQ server host
-    $rabbitmq_port = 5672;
-    $rabbitmq_user = 'it490';
-    $rabbitmq_password = 'it490';
-    $rabbitmq_queue_send = '';
-    $rabbitmq_queue_receive = '';
-
-    # Define the RabbitMQ queue names based on the selected country
-    switch ($selectedCountry) {
-        case 'USA':
-            $rabbitmq_queue_send = 'playerData_FTOB_US';
-            $rabbitmq_queue_receive = 'playerData_BTOF_US';
-            $messageToSend = "Requesting US PlayerData";
-            break;
-        case 'China':
-            $rabbitmq_queue_send = 'playerData_FTOB_C';
-            $rabbitmq_queue_receive = 'playerData_BTOF_C';
-            $messageToSend = "Requesting C PlayerData";
-            break;
-        case 'Korea':
-            $rabbitmq_queue_send = 'playerData_FTOB_K';
-            $rabbitmq_queue_receive = 'playerData_BTOF_K';
-            $messageToSend = "Requesting K PlayerData";
-            break;
-        default:
-            // Handle other cases or errors
-            break;
-    }
-
-    if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
-        $connectionS = new PhpAmqpLib\Connection\AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-        $channelS = $connectionS->channel();
-
-        $msg = new PhpAmqpLib\Message\AMQPMessage($messageToSend);
-        $channelS->basic_publish($msg, '', $rabbitmq_queue_send);
-
-        $channelS->close();
-
-        $connectionR = new PhpAmqpLib\Connection\AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-        $channelR = $connectionR->channel();
-
-        $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
-
-        $decodedData = '';
-        $messagePartsCount = 19;
-
-        $callback = function ($msg) use (&$decodedData, $messagePartsCount) {
-            $decoded_message = utf8_decode($msg->body);
-
-            if (strpos($decoded_message, ',') !== false) {
-                $decodedData .= $decoded_message;
-            } else {
-                $decodedData .= $decoded_message;
-                $message_parts = explode(',', $decodedData);
-
-                if (count($message_parts) === $messagePartsCount) {
-                    displayRow($message_parts);
-                    $decodedData = '';
-                } else {
-                    echo "Received incomplete or invalid data: ", $decodedData, "<br>";
+            function displayRow($data)
+            {
+                echo "<tr>";
+                foreach ($data as $part) {
+                    echo "<td>" . htmlspecialchars($part) . "</td>";
                 }
-
-                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                echo "</tr>";
             }
-        };
 
-        $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                # Process form submission
+                if (isset($_POST['selectedCountry'])) {
+                    $selectedCountry = $_POST['selectedCountry'];
 
-        while (count($channelR->callbacks)) {
-            $channelR->wait(null, false, 5); // Wait for incoming messages with a timeout
-        }
+                    # RabbitMQ configurations for each country
+                    $rabbitmq_host = '10.198.120.107'; # Update with your RabbitMQ server host
+                    $rabbitmq_port = 5672;
+                    $rabbitmq_user = 'it490';
+                    $rabbitmq_password = 'it490';
+                    $rabbitmq_queue_send = '';
+                    $rabbitmq_queue_receive = '';
 
-        $channelR->close();
-        $connectionR->close();
-    } else {
-        echo "Invalid RabbitMQ queue or country selection";
-    }
-}
-?>
-    </tbody>
-</table>
-   
+                    # Define the RabbitMQ queue names based on the selected country
+                    switch ($selectedCountry) {
+                        case 'USA':
+                            $rabbitmq_queue_send = 'playerData_FTOB_US';
+                            $rabbitmq_queue_receive = 'playerData_BTOF_US';
+                            $messageToSend = "Requesting US PlayerData";
+                            break;
+                        case 'China':
+                            $rabbitmq_queue_send = 'playerData_FTOB_C';
+                            $rabbitmq_queue_receive = 'playerData_BTOF_C';
+                            $messageToSend = "Requesting C PlayerData";
+                            break;
+                        case 'Korea':
+                            $rabbitmq_queue_send = 'playerData_FTOB_K';
+                            $rabbitmq_queue_receive = 'playerData_BTOF_K';
+                            $messageToSend = "Requesting K PlayerData";
+                            break;
+                        default:
+                            # Handle other cases or errors
+                            break;
+                    }
+
+                    if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
+                        $connectionS = null;
+                        $connectionR = null;
+
+                        try {
+                            $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+                            $channelS = $connectionS->channel();
+                            $channelS->queue_declare($rabbitmq_queue_send, false, true, false, false);
+                        
+                            # Send the data to RabbitMQ in the desired format
+                            $message = new AMQPMessage($messageToSend);
+                            $channelSend->basic_publish($message, '', $rabbitmq_queue_send);
+                            $channelS->close();
+                            $connectionS->close();
+
+                                # Receiving Data 
+                            $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
+                            $channelR = $connectionReceive->channel();
+                            $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
+                            # Handle the received messages
+                            $decodedData = '';
+                            $messagePartsCount = 19;
+
+                            $callback = function ($msg) use (&$decodedData, $messagePartsCount) {
+                                $decoded_message = utf8_decode($msg->body);
+
+                                if (strpos($decoded_message, ',') !== false) {
+                                    $decodedData .= $decoded_message;
+                                } else {
+                                    $decodedData .= $decoded_message;
+                                    $message_parts = explode(',', $decodedData);
+
+                                    if (count($message_parts) === $messagePartsCount) {
+                                        displayRow($message_parts);
+                                        $decodedData = '';
+                                    } else {
+                                        echo "Received incomplete or invalid data: ", $decodedData, "<br>";
+                                    }
+
+                                    $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                                }
+                            };
+
+                            $channelR->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
+
+                            while (count($channelR->callbacks)) {
+                                $channelR->wait(); # Wait for incoming messages with a timeout
+                            }
+                            $channelReceive->close();
+                            $connectionReceive->close();
+                        } catch (Exception $e) {
+                            echo "An error occurred: " . $e->getMessage();
+                        }
+                    } else {
+                        echo "Invalid RabbitMQ queue or country selection";
+                    }
+                }
+            }
+            ?>
+        </tbody>
+    </table>
+    <script>
+        // Add click event listener to country buttons
+        document.addEventListener('DOMContentLoaded', function () {
+            const countryButtons = document.querySelectorAll('.country-button');
+            countryButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const selectedCountry = this.getAttribute('data-country');
+                    document.getElementById('selected-country').value = selectedCountry;
+                    document.querySelector('form').submit(); // Submit the form
+                });
+            });
+        });
+    </script>
+
 </body>
+
 </html>
