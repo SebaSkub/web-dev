@@ -230,12 +230,12 @@ require_once __DIR__ . '/vendor/autoload.php';
         <tbody>
             <?php
             #---------------------------------------------
-#           PlayerData -> Backend
-#        Display PlayerData in a Table
-#           By: Sebastian Skubisz
-#---------------------------------------------
-            function displayRow($data)
-            {
+            #PlayerData -> Backend
+            #Display PlayerData in a Table
+            #By: Sebastian Skubisz
+            #---------------------------------------------
+             
+            function displayRow($data) {
                 echo "<tr>";
                 foreach ($data as $part) {
                     echo "<td>" . htmlspecialchars($part) . "</td>";
@@ -244,19 +244,16 @@ require_once __DIR__ . '/vendor/autoload.php';
             }
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                # Process form submission
                 if (isset($_POST['selectedCountry'])) {
                     $selectedCountry = $_POST['selectedCountry'];
 
-                    # RabbitMQ configurations for each country
-                    $rabbitmq_host = '10.198.120.107'; # Update with your RabbitMQ server host
+                    $rabbitmq_host = '10.198.120.107';
                     $rabbitmq_port = 5672;
                     $rabbitmq_user = 'it490';
                     $rabbitmq_password = 'it490';
                     $rabbitmq_queue_send = '';
                     $rabbitmq_queue_receive = '';
 
-                    # Define the RabbitMQ queue names based on the selected country
                     switch ($selectedCountry) {
                         case 'USA':
                             $rabbitmq_queue_send = 'playerData_FTOB_US';
@@ -274,30 +271,25 @@ require_once __DIR__ . '/vendor/autoload.php';
                             $messageToSend = "Requesting K PlayerData";
                             break;
                         default:
-                            # Handle other cases or errors
+                            // Handle other cases or errors
                             break;
                     }
 
                     if ($rabbitmq_queue_send !== '' && $rabbitmq_queue_receive !== '') {
-                        $connectionS = null;
-                        $connectionR = null;
-
                         try {
                             $connectionS = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
                             $channelS = $connectionS->channel();
                             $channelS->queue_declare($rabbitmq_queue_send, false, true, false, false);
-                        
-                            # Send the data to RabbitMQ in the desired format
+
                             $message = new AMQPMessage($messageToSend);
-                            $channelSend->basic_publish($message, '', $rabbitmq_queue_send);
+                            $channelS->basic_publish($message, '', $rabbitmq_queue_send);
                             $channelS->close();
                             $connectionS->close();
 
-                                # Receiving Data 
                             $connectionR = new AMQPStreamConnection($rabbitmq_host, $rabbitmq_port, $rabbitmq_user, $rabbitmq_password);
-                            $channelR = $connectionReceive->channel();
+                            $channelR = $connectionR->channel();
                             $channelR->queue_declare($rabbitmq_queue_receive, false, true, false, false);
-                            # Handle the received messages
+
                             $decodedData = '';
                             $messagePartsCount = 19;
 
@@ -321,13 +313,13 @@ require_once __DIR__ . '/vendor/autoload.php';
                                 }
                             };
 
-                            $channelR->basic_consume($rabbitmq_queue_receive, '', false, true, false, false, $callback);
+                            $channelR->basic_consume($rabbitmq_queue_receive, '', false, false, false, false, $callback);
 
                             while (count($channelR->callbacks)) {
-                                $channelR->wait(); # Wait for incoming messages with a timeout
+                                $channelR->wait();
                             }
-                            $channelReceive->close();
-                            $connectionReceive->close();
+                            $channelR->close();
+                            $connectionR->close();
                         } catch (Exception $e) {
                             echo "An error occurred: " . $e->getMessage();
                         }
